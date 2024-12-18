@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <>
-      <div>
+      <div className='font-sora'>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
