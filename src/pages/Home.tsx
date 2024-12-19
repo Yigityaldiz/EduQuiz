@@ -1,12 +1,11 @@
 import Footer from "@/components/layouts/footer";
 import Header from "@/components/layouts/header";
-import { TestimonialCarousel } from "@/components/testimonial-carousel";
+
 import AnimatedShinyText from "@/components/ui/animated-shiny-text";
 import BlurIn from "@/components/ui/blur-in";
 import { BorderBeam } from "@/components/ui/border-beam";
 import Grow from "@/components/ui/grow";
-import Marquee from "@/components/ui/marquee";
-import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
+
 import { cn } from "@/lib/utils";
 import {
   ArrowRightIcon,
@@ -15,6 +14,9 @@ import {
   MousePointerClick,
   Pickaxe,
   Wallet,
+  Rocket,
+  Gift,
+  Shield
 } from "lucide-react";
 import * as React from "react";
 
@@ -180,12 +182,45 @@ function Home() {
             Next-Level Learning with EduQuid Cutting-Edge Features
           </h2>
 
-          <p className="text-md text-white/30 max-w-[768px] mx-auto">
+          {/* <p className="text-md text-white/30 max-w-[768px] mx-auto">
             Explore revolutionary features that seamlessly combine education and
             rewards, creating an engaging and enjoyable learning experience like
             never before.
-          </p>
-          <p className="text-7xl">🚀</p>
+          </p> */}
+          <div className="flex items-center justify-center gap-8 pt-16 pb-16">
+            {/* Sol kısım */}
+            <div className="shadow-inner-shadow p-6 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4 z-0">
+              <div className="rounded-full p-4 bg-[#101636] w-fit">
+                <Rocket size={32} className="text-[#5964f6]" />
+              </div>
+              <h2 className="text-white text-xl">Fast & Effortless</h2>
+              <p className="text-sm text-white/30">
+                Say goodbye to complicated setups! Create or join quizzes seamlessly, and experience instant results – all powered by cutting-edge blockchain technology.
+              </p>
+            </div>
+
+            {/* Orta kısım - Daha büyük, ön planda */}
+            <div className="shadow-inner-shadow p-10 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4 transform scale-110 z-10">
+              <div className="rounded-full p-4 bg-[#101636] w-fit">
+                <Gift size={32} className="text-[#5964f6]" />
+              </div>
+              <h2 className="text-white text-xl">Fair Rewards</h2>
+              <p className="text-sm text-white/30">
+                Ensure trust and fairness with automated prize distribution directly to participants’ wallets. Every winner gets their share instantly and securely.
+              </p>
+            </div>
+
+            {/* Sağ kısım */}
+            <div className="shadow-inner-shadow p-6 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4 z-0">
+              <div className="rounded-full p-4 bg-[#101636] w-fit">
+                <Shield size={32} className="text-[#5964f6]" />
+              </div>
+              <h2 className="text-white text-xl">Secure & Transparent</h2>
+              <p className="text-sm text-white/30">
+                Built on blockchain, every transaction and quiz result is tamper-proof and transparent. Your events are safe with us.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
