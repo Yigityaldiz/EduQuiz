@@ -2,7 +2,7 @@ import ShimmerButton from "../ui/shimmer-button";
 
 export default function Header() {
   return (
-    <header className="flex justify-between items-center">
+    <header className="flex justify-between items-center container-fluid my-6">
       <div>
         <img
           src="/assets/images/logos/eduquiz-white.png"

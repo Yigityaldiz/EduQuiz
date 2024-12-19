@@ -1,4 +1,5 @@
 import Header from "@/components/layouts/header";
+import { TestimonialCarousel } from "@/components/testimonial-carousel";
 import AnimatedShinyText from "@/components/ui/animated-shiny-text";
 import BlurIn from "@/components/ui/blur-in";
 import { BorderBeam } from "@/components/ui/border-beam";
@@ -11,9 +12,12 @@ function Home() {
   return (
     <React.Fragment>
       <Header />
-      <section id="hero" className="grid place-items-center h-[100dvh] overflow-y-hidden">
-        <div className="mt-28 mb-24">
-          <div className="z-10 flex items-center justify-center">
+      <section
+        id="hero"
+        className="relative grid place-items-center h-[100dvh] overflow-y-hidden bg-transparent"
+      >
+        <div className="mt-28 mb-24 z-10 container-fluid">
+          <div className="z-10 flex items-center justify-center mb-8">
             <div
               className={cn(
                 "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
@@ -36,7 +40,10 @@ function Home() {
           />
         </div>
 
-        <Grow className="rounded-2xl w-3/4 h-auto relative" duration={0.75}>
+        <Grow
+          className="rounded-2xl w-1/2 px-0 h-auto relative z-10 container-fluid"
+          duration={0.75}
+        >
           <img
             src="https://framerusercontent.com/images/JSakO3iDpBY0uvb9cOV7x278fQM.png?scale-down-to=1024"
             alt="hero"
@@ -45,7 +52,20 @@ function Home() {
 
           <BorderBeam />
         </Grow>
+
+        <div className="absolute w-full top-0">
+          <img
+            src="https://framerusercontent.com/images/0pkkUPiiBy68AdWhcnSLJijrCvQ.svg?scale-down-to=1024"
+            className="object-cover w-full"
+          />
+        </div>
       </section>
+      
+      <section id="sponsors">
+              
+
+      </section>
+      {/* <TestimonialCarousel /> */}
     </React.Fragment>
   );
 }

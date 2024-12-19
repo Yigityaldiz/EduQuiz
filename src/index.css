@@ -14,6 +14,12 @@
     background-color: #060a1e;
     font-family: 'Sora', sans-serif;
   }
+
+  .container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
 }
 
 
