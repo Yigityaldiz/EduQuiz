@@ -1,11 +1,21 @@
+import Footer from "@/components/layouts/footer";
 import Header from "@/components/layouts/header";
 import { TestimonialCarousel } from "@/components/testimonial-carousel";
 import AnimatedShinyText from "@/components/ui/animated-shiny-text";
 import BlurIn from "@/components/ui/blur-in";
 import { BorderBeam } from "@/components/ui/border-beam";
 import Grow from "@/components/ui/grow";
+import Marquee from "@/components/ui/marquee";
+import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { cn } from "@/lib/utils";
-import { ArrowRightIcon } from "lucide-react";
+import {
+  ArrowRightIcon,
+  BadgeDollarSign,
+  Droplets,
+  MousePointerClick,
+  Pickaxe,
+  Wallet,
+} from "lucide-react";
 import * as React from "react";
 
 function Home() {
@@ -16,7 +26,7 @@ function Home() {
         id="hero"
         className="relative grid place-items-center h-[100dvh] overflow-y-hidden bg-transparent"
       >
-        <div className="mt-28 mb-24 z-10 container-fluid">
+        <div className="mt-28 mb-24 z-10 container-fluid grid place-items-center">
           <div className="z-10 flex items-center justify-center mb-8">
             <div
               className={cn(
@@ -31,12 +41,12 @@ function Home() {
           </div>
           <BlurIn
             word="Unlock Knowledge, Earn Rewards"
-            className="text-4xl max-w-[768px] pointer-events-none whitespace-pre-wrap bg-gradient-to-t from-blue-300 to-gray-100 bg-clip-text text-center font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10"
+            className="text-4xl md:text-[86px] max-w-[960px] pointer-events-none whitespace-pre-wrap bg-gradient-to-t from-blue-300 to-gray-100 bg-clip-text text-center font-medium leading-none text-transparent dark:from-white dark:to-slate-900/10"
           />
 
           <BlurIn
             word="EduQuid combines the power of blockchain with interactive quizzes to create a rewarding learning experience. Test your knowledge, compete, and earn tokens—it's education like never before."
-            className="text-md font-normal md:text-md max-w-[768px] pointer-events-none text-white/30 text-center leading-normal dark:from-white dark:to-slate-900/10"
+            className="text-md text-center font-normal md:text-md max-w-[768px] pointer-events-none text-white/30  leading-normal dark:from-white dark:to-slate-900/10"
           />
         </div>
 
@@ -53,18 +63,133 @@ function Home() {
           <BorderBeam />
         </Grow>
 
-        <div className="absolute w-full top-0">
+        <div className="absolute w-full -top-1/3 left-0 h-full ">
           <img
             src="https://framerusercontent.com/images/0pkkUPiiBy68AdWhcnSLJijrCvQ.svg?scale-down-to=1024"
             className="object-cover w-full"
           />
         </div>
       </section>
-      
-      <section id="sponsors">
-              
 
+      <section id="sponsors" className="container-fluid py-8 text-center">
+        <h3 className="text-white/50 font-medium pb-4 text-lg">
+          Trusted By Top Organizations
+        </h3>
+        <div className="overflow-hidden flex justify-center space-x-16">
+          <img
+            src="/assets/images/logos/educhain.png"
+            width={180}
+            height={75}
+          />
+          <img
+            src="/assets/images/logos/opencampus.png"
+            width={180}
+            height={75}
+          />
+        </div>
       </section>
+
+      <section
+        id="how-it-works"
+        className="container-fluid py-8 text-center grid grid-cols-2 gap-8"
+      >
+        <div className="relative h-full">
+          <div className="sticky top-1/3 left-0">
+            <h2 className="text-white text-7xl font-medium text-left">
+              Turn Knowledge Into Rewards
+            </h2>
+            <p className="text-white/30 text-left text-lg">
+              Dive into fun quizzes, earn tokens instantly, and reshape the way
+              you learn and grow!
+            </p>
+          </div>
+        </div>
+        <div className="relative space-y-8">
+          <div className="shadow-inner-shadow p-8 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4">
+            <div className="rounded-full p-4 bg-[#101636] w-fit ">
+              <Wallet size={32} className="text-[#5964f6]" />
+            </div>
+            <h3 className="text-white text-xl">
+              Connect Your Wallet & Create Your Profile
+            </h3>
+            <p className="text-sm text-white/30">
+              Join the EduQuid platform with a simple and quick registration
+              process. Set up your profile effortlessly, and connect your crypto
+              wallet to unlock a secure and seamless way to receive your
+              rewards.{" "}
+            </p>
+          </div>
+
+          <div className="shadow-inner-shadow p-8 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4">
+            <div className="rounded-full p-4 bg-[#101636] w-fit ">
+              <MousePointerClick size={32} className="text-[#5964f6]" />
+            </div>
+            <h3 className="text-white text-xl">Choose a Quiz</h3>
+            <p className="text-sm text-white/30">
+              Explore a wide range of topics and difficulty levels designed to
+              match your interests and challenge your skills. Choose quizzes
+              that engage your curiosity, test your knowledge, and make learning
+              both fun and rewarding.
+            </p>
+          </div>
+
+          <div className="shadow-inner-shadow p-8 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4">
+            <div className="rounded-full p-4 bg-[#101636] w-fit ">
+              <BadgeDollarSign size={32} className="text-[#5964f6]" />
+            </div>
+            <h3 className="text-white text-xl">Play & Earn</h3>
+            <p className="text-sm text-white/30">
+              Answer engaging questions and track your progress in real-time as
+              you work through each quiz. Your performance directly impacts your
+              rewards—the better your score, the more tokens you earn, making
+              every correct answer even more satisfying!
+            </p>
+          </div>
+
+          <div className="shadow-inner-shadow p-8 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4">
+            <div className="rounded-full p-4 bg-[#101636] w-fit ">
+              <Droplets size={32} className="text-[#5964f6]" />
+            </div>
+            <h3 className="text-white text-xl">Rewards via Liquidity Pool</h3>
+            <p className="text-sm text-white/30">
+              Your tokens are distributed instantly through our
+              blockchain-powered liquidity pool, ensuring secure and transparent
+              transactions. Redeem your earned tokens for exciting prizes or
+              save them for future opportunities to maximize your rewards!
+            </p>
+          </div>
+
+          <div className="shadow-inner-shadow p-8 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4">
+            <div className="rounded-full p-4 bg-[#101636] w-fit ">
+              <Pickaxe size={32} className="text-[#5964f6]" />
+            </div>
+            <h3 className="text-white text-xl">Keep Learning & Winning</h3>
+            <p className="text-sm text-white/30">
+              Keep coming back for daily challenges, exciting leaderboard
+              competitions, and even more opportunities to earn. With every quiz
+              you take, watch your knowledge expand and your rewards grow,
+              making each visit to EduQuid more rewarding than the last!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" className="container-fluid py-8 my-8">
+        <div className=" space-y-6 text-center">
+          <h2 className="text-white text-6xl font-medium">
+            Next-Level Learning with EduQuid Cutting-Edge Features
+          </h2>
+
+          <p className="text-md text-white/30 max-w-[768px] mx-auto">
+            Explore revolutionary features that seamlessly combine education and
+            rewards, creating an engaging and enjoyable learning experience like
+            never before.
+          </p>
+          <p className="text-7xl">🚀</p>
+        </div>
+      </section>
+
+      <Footer />
       {/* <TestimonialCarousel /> */}
     </React.Fragment>
   );
