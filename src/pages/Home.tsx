@@ -4,7 +4,9 @@ import Header from "@/components/layouts/header";
 import AnimatedShinyText from "@/components/ui/animated-shiny-text";
 import BlurIn from "@/components/ui/blur-in";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { Button } from "@/components/ui/button";
 import Grow from "@/components/ui/grow";
+import PulsatingButton from "@/components/ui/pulsating-button";
 
 import { cn } from "@/lib/utils";
 import {
@@ -16,7 +18,7 @@ import {
   Wallet,
   Rocket,
   Gift,
-  Shield
+  Shield,
 } from "lucide-react";
 import * as React from "react";
 
@@ -28,7 +30,7 @@ function Home() {
         id="hero"
         className="relative grid place-items-center h-[100dvh] overflow-y-hidden bg-transparent"
       >
-        <div className="mt-28 mb-24 z-10 container-fluid grid place-items-center">
+        <div className="mt-20 mb-24 z-10 container-fluid grid place-items-center">
           <div className="z-10 flex items-center justify-center mb-8">
             <div
               className={cn(
@@ -50,6 +52,10 @@ function Home() {
             word="EduQuid combines the power of blockchain with interactive quizzes to create a rewarding learning experience. Test your knowledge, compete, and earn tokens—it's education like never before."
             className="text-md text-center font-normal md:text-md max-w-[768px] pointer-events-none text-white/30  leading-normal dark:from-white dark:to-slate-900/10"
           />
+
+          <PulsatingButton pulseColor="#5964f6" className="px-12 py-4 mt-8">
+            Get Started Now!
+          </PulsatingButton>
         </div>
 
         <Grow
@@ -176,18 +182,38 @@ function Home() {
         </div>
       </section>
 
+      <section
+        id="cta"
+        className="relative grid place-items-center bg-[#101636] py-16 shadow-inner-shadow border-t border-b border-[#9ea3bf40]"
+      >
+        <div className="absolute inset-0 bg-gradient-to-tl from-[#060a1e] to-transparent pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-bl from-[#060a1e] to-transparent pointer-events-none"></div>
+        <div className="container-fluid py-8 text-center flex flex-col items-center relative z-10">
+          <h2 className="text-white text-6xl font-medium">Ready to Dive In?</h2>
+          <p className="text-white/30 text-lg">
+            Join EduQuid today and start your journey towards a smarter and more
+            rewarding future!
+          </p>
+
+          <PulsatingButton pulseColor="#5964f6" className="px-12 py-4 mt-8">
+            Get Started Now!
+          </PulsatingButton>
+        </div>
+      </section>
+
       <section id="features" className="container-fluid py-8 my-8">
         <div className=" space-y-6 text-center">
           <h2 className="text-white text-6xl font-medium">
             Next-Level Learning with EduQuid Cutting-Edge Features
           </h2>
 
-          {/* <p className="text-md text-white/30 max-w-[768px] mx-auto">
+          <p className="text-md text-white/30 max-w-[768px] mx-auto">
             Explore revolutionary features that seamlessly combine education and
             rewards, creating an engaging and enjoyable learning experience like
             never before.
-          </p> */}
-          <div className="flex items-center justify-center gap-8 pt-16 pb-16">
+          </p>
+
+          <div className="grid grid-cols-3 gap-16 pt-16 pb-16">
             {/* Sol kısım */}
             <div className="shadow-inner-shadow p-6 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4 z-0">
               <div className="rounded-full p-4 bg-[#101636] w-fit">
@@ -195,18 +221,22 @@ function Home() {
               </div>
               <h2 className="text-white text-xl">Fast & Effortless</h2>
               <p className="text-sm text-white/30">
-                Say goodbye to complicated setups! Create or join quizzes seamlessly, and experience instant results – all powered by cutting-edge blockchain technology.
+                Say goodbye to complicated setups! Create or join quizzes
+                seamlessly, and experience instant results – all powered by
+                cutting-edge blockchain technology.
               </p>
             </div>
 
             {/* Orta kısım - Daha büyük, ön planda */}
-            <div className="shadow-inner-shadow p-10 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4 transform scale-110 z-10">
+            <div className="shadow-inner-shadow p-10 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4 transform scale-125 z-10">
               <div className="rounded-full p-4 bg-[#101636] w-fit">
                 <Gift size={32} className="text-[#5964f6]" />
               </div>
               <h2 className="text-white text-xl">Fair Rewards</h2>
               <p className="text-sm text-white/30">
-                Ensure trust and fairness with automated prize distribution directly to participants’ wallets. Every winner gets their share instantly and securely.
+                Ensure trust and fairness with automated prize distribution
+                directly to participants’ wallets. Every winner gets their share
+                instantly and securely.
               </p>
             </div>
 
@@ -217,7 +247,8 @@ function Home() {
               </div>
               <h2 className="text-white text-xl">Secure & Transparent</h2>
               <p className="text-sm text-white/30">
-                Built on blockchain, every transaction and quiz result is tamper-proof and transparent. Your events are safe with us.
+                Built on blockchain, every transaction and quiz result is
+                tamper-proof and transparent. Your events are safe with us.
               </p>
             </div>
           </div>
@@ -225,7 +256,6 @@ function Home() {
       </section>
 
       <Footer />
-      {/* <TestimonialCarousel /> */}
     </React.Fragment>
   );
 }
