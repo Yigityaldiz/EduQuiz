@@ -28,9 +28,9 @@ function Home() {
       <Header />
       <section
         id="hero"
-        className="relative grid place-items-center h-[100dvh] overflow-y-hidden bg-transparent"
+        className="relative grid place-items-center min-h-[100dvh] overflow-hidden bg-transparent w-full"
       >
-        <div className="mt-20 mb-24 z-10 container-fluid grid place-items-center">
+        <div className="mt-20 mb-24 z-10 container-fluid grid place-items-center px-4 md:px-0">
           <div className="z-10 flex items-center justify-center mb-8">
             <div
               className={cn(
@@ -59,22 +59,22 @@ function Home() {
         </div>
 
         <Grow
-          className="rounded-2xl w-1/2 px-0 h-auto relative z-10 container-fluid"
+          className="rounded-2xl w-full md:w-3/4 lg:w-1/2 px-0 h-auto relative z-10 container-fluid"
           duration={0.75}
         >
           <img
             src="https://framerusercontent.com/images/JSakO3iDpBY0uvb9cOV7x278fQM.png?scale-down-to=1024"
             alt="hero"
-            className="rounded-2xl object-cover w-full"
+            className="rounded-2xl object-contain w-full"
           />
 
           <BorderBeam />
         </Grow>
 
-        <div className="absolute w-full -top-1/3 left-0 h-full ">
+        <div className="absolute w-full -top-1/3 left-0 h-[140%] overflow-hidden">
           <img
             src="https://framerusercontent.com/images/0pkkUPiiBy68AdWhcnSLJijrCvQ.svg?scale-down-to=1024"
-            className="object-cover w-full"
+            className="object-cover w-full h-full"
           />
         </div>
       </section>
@@ -99,7 +99,7 @@ function Home() {
 
       <section
         id="how-it-works"
-        className="container-fluid py-8 text-center grid grid-cols-2 gap-8"
+        className="container-fluid py-8 text-center grid md:grid-cols-2 gap-8"
       >
         <div className="relative h-full">
           <div className="sticky top-1/3 left-0">
@@ -213,7 +213,7 @@ function Home() {
             never before.
           </p>
 
-          <div className="grid grid-cols-3 gap-16 pt-16 pb-16">
+          <div className=" md:grid md:grid-cols-3 md:gap-16 md:pt-16 md:pb-16  space-y-10 pt-16 pb-16">
             {/* Sol kısım */}
             <div className="shadow-inner-shadow p-6 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4 z-0">
               <div className="rounded-full p-4 bg-[#101636] w-fit">
@@ -228,7 +228,7 @@ function Home() {
             </div>
 
             {/* Orta kısım - Daha büyük, ön planda */}
-            <div className="shadow-inner-shadow p-10 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4 transform scale-125 z-10">
+            <div className="shadow-inner-shadow p-10 border border-[#9ea3bf40] rounded-2xl grid place-items-center space-y-4 md:transform md:scale-125 z-10">
               <div className="rounded-full p-4 bg-[#101636] w-fit">
                 <Gift size={32} className="text-[#5964f6]" />
               </div>

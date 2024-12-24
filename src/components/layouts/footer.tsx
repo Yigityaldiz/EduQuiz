@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="relative overflow-hidden">
       <div className="container-fluid">
         <div className="flex justify-between">
-          <div className="flex items-center space-x-8">
+          <div className="md:flex md:items-center md:space-x-8">
             <img
               src="/assets/images/logos/eduquiz-white.png"
               width={180}
@@ -11,16 +11,16 @@ export default function Footer() {
               alt="Eduquid Logo"
             />
 
-            <div className="h-6 w-[1px] bg-white"></div>
+            <div className="h-6 w-[1px] bg-white hidden md:block"></div>
 
-            <p className="text-white/50">
+            <p className="text-white/50 text-left  ">
               Innovative and secure <br />
               educational experience.
             </p>
           </div>
 
           <nav>
-            <ul className="flex justify-center space-x-8 py-8 text-white/30">
+            <ul className="md:flex md:justify-center items-center space-x-8 py-8 text-white/30">
               <li>
                 <a href="/" className="hover:text-white">
                   How It Works?
