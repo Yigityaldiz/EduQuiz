@@ -5,9 +5,15 @@
  */
 
 // Start of Selection
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
-import ShimmerButton from "../ui/shimmer-button";
-import { MenuIcon } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@radix-ui/react-dropdown-menu";
+import ConnectWalletButton from "../connect-wallet";
 
 export default function Header() {
   return (
@@ -45,9 +51,7 @@ export default function Header() {
             <div className="h-[2px] w-6 bg-white"></div>
             <div className="h-[2px] w-6 bg-white"></div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="bg-[#060a1e] w-48 z-50 p-3 text-white border border-gray-600 rounded-md mt-2"
-          >
+          <DropdownMenuContent className="bg-[#060a1e] w-48 z-50 p-3 text-white border border-gray-600 rounded-md mt-2">
             <DropdownMenuLabel className="text-white">Menü</DropdownMenuLabel>
             <DropdownMenuSeparator className="my-1 border-b border-white/10" />
             <DropdownMenuItem className="cursor-pointer hover:bg-white/10 rounded px-2 py-1">
@@ -65,13 +69,7 @@ export default function Header() {
       </div>
 
       {/* Cüzdan Butonu */}
-      <ShimmerButton
-        className="hidden md:inline-block font-semibold border border-[#9ea3bf40] ml-4"
-        shimmerColor="rgba(158, 163, 191, 0.25)"
-        shimmerSize="0.2em"
-      >
-        Connect Wallet
-      </ShimmerButton>
+      <ConnectWalletButton />
     </header>
   );
 }

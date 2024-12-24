@@ -4,9 +4,10 @@ import Header from "@/components/layouts/header";
 import AnimatedShinyText from "@/components/ui/animated-shiny-text";
 import BlurIn from "@/components/ui/blur-in";
 import { BorderBeam } from "@/components/ui/border-beam";
-import { Button } from "@/components/ui/button";
 import Grow from "@/components/ui/grow";
 import PulsatingButton from "@/components/ui/pulsating-button";
+
+import { useOCAuth } from "@opencampus/ocid-connect-js";
 
 import { cn } from "@/lib/utils";
 import {
@@ -23,6 +24,12 @@ import {
 import * as React from "react";
 
 function Home() {
+  const { authState } = useOCAuth();
+
+  React.useEffect(() => {
+    console.log(authState);
+  }, [authState]);
+
   return (
     <React.Fragment>
       <Header />
