@@ -3,20 +3,14 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import "./App.css";
 import { useNavigate } from "react-router-dom";
-import { LoginCallback } from "@opencampus/ocid-connect-js";
+// import { LoginCallBack } from '@opencampus/ocid-connect-js';
 import OCConnectWrapper from "./layouts/OCConnectWrapper";
+import CreateQuiz from "./pages/CreateQuiz";
+import UserLoginPage from "./pages/UserLogin";
 
 function App() {
 
-  const navigate = useNavigate();
 
-  const loginSuccess = () => {
-    console.log("Login success");
-    navigate("/");
-  };
-  const loginError = () => {
-    console.log("Login error");
-  };
 
   return (
     <div>
@@ -24,15 +18,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route
-            path="/redirect"
-            element={
-              <LoginCallback
-                errorCallback={loginError}
-                successCallback={loginSuccess}
-              />
-            }
-          />
+          <Route path="/redirect" element={ <CreateQuiz /> }
+/>
         </Routes>
       </OCConnectWrapper>
     </div>
