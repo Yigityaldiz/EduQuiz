@@ -7,19 +7,17 @@ import { useNavigate } from "react-router-dom";
 import OCConnectWrapper from "./layouts/OCConnectWrapper";
 import CreateQuiz from "./pages/CreateQuiz";
 import UserLoginPage from "./pages/UserLogin";
+import Questions from "./pages/Questions";
 
 function App() {
-
-
-
   return (
     <div>
       <OCConnectWrapper>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/redirect" element={ <CreateQuiz /> }
-/>
+          <Route path="/redirect" element={<CreateQuiz />} />
+          <Route path="/questions" element={<Questions />} />
         </Routes>
       </OCConnectWrapper>
     </div>
