@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Share2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface Quiz {
   id: string;
@@ -25,6 +27,8 @@ export default function UserPage() {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const { toast } = useToast();
 
   useEffect(() => {
     setIsLoading(true);
@@ -44,6 +48,14 @@ export default function UserPage() {
         setIsLoading(false);
       });
   }, [id]);
+
+  const handleCopyQuizLink = async (slug: string) => {
+    await navigator.clipboard.writeText("localhost:5173/quiz/" + slug);
+    toast({
+      title: "Link copied to clipboard",
+      description: "You can now share this link with your audience.",
+    });
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -115,6 +127,7 @@ export default function UserPage() {
                   <TableHead className="text-right">
                     Number of Winners
                   </TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -125,6 +138,14 @@ export default function UserPage() {
                     <TableCell>{quiz.duration}</TableCell>
                     <TableCell className="text-center w-[200px]">
                       {quiz.winnerCount}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <button
+                        className="text-blue-500"
+                        onClick={() => handleCopyQuizLink(quiz.slug)}
+                      >
+                        <Share2 />
+                      </button>
                     </TableCell>
                   </TableRow>
                 ))}

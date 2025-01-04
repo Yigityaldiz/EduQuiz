@@ -6,6 +6,7 @@ import {
   Outlet,
 } from "react-router-dom";
 import OCConnectWrapper from "./layouts/OCConnectWrapper";
+import { Toaster } from "./components/ui/toaster";
 
 // Lazy-loaded components
 const Home = lazy(() => import("./pages/Home"));
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
     element: (
       <OCConnectWrapper>
         <Outlet />
+        <Toaster />
       </OCConnectWrapper>
     ),
     children: [
@@ -63,11 +65,16 @@ const router = createBrowserRouter([
       },
       {
         path: "user",
-        element: (
-          <LazyLoad>
-            <UserPage />
-          </LazyLoad>
-        ),
+        children: [
+          {
+            path: ":id",
+            element: (
+              <LazyLoad>
+                <UserPage />
+              </LazyLoad>
+            ),
+          },
+        ],
       },
     ],
   },
