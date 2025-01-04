@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
     Table,
     TableBody,
@@ -8,9 +8,24 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function UserPage() {
     const navigate = useNavigate();
+    const { id } = useParams();
+    const [quizzes, setQuizzes] = useState([]);
+    useEffect(() => {
+        axios.get(`https://api.eduquiz.space/api/quizzes?userId=${id}`)
+            .then(response => {
+                console.log(response.data);
+                setQuizzes(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching quizzes:', error);
+            });
+    }, [id]);
+
     return <div className="">
         <div className="border-b border-gray-200">
             <div className="flex items-center p-2">
@@ -41,12 +56,14 @@ export default function UserPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow>
-                                <TableCell className="font-medium">Test1</TableCell>
-                                <TableCell>This is a test quiz</TableCell>
-                                <TableCell>30 minutes</TableCell>
-                                <TableCell className="text-center w-[200px]">2</TableCell>
-                            </TableRow>
+                            {quizzes.map((quiz: any) => (
+                                <TableRow>
+                                    <TableCell className="font-medium">{quiz.title}</TableCell>
+                                    <TableCell>{quiz.description}</TableCell>
+                                    <TableCell>{quiz.duration}</TableCell>
+                                    <TableCell className="text-center w-[200px]">{quiz.winnerCount}</TableCell>
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
 
