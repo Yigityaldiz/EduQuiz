@@ -2,12 +2,12 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import "./App.css";
-import { useNavigate } from "react-router-dom";
-// import { LoginCallBack } from '@opencampus/ocid-connect-js';
+
 import OCConnectWrapper from "./layouts/OCConnectWrapper";
 import CreateQuiz from "./pages/CreateQuiz";
-import UserLoginPage from "./pages/UserLogin";
+
 import Questions from "./pages/Questions";
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
@@ -16,8 +16,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/redirect" element={<CreateQuiz />} />
+
+          <Route path="/redirect" element={
+
+            <CreateQuiz />
+
+          } />
           <Route path="/questions" element={<Questions />} />
+          <Route path="/userPage/:id" element={<UserPage />} />
         </Routes>
       </OCConnectWrapper>
     </div>

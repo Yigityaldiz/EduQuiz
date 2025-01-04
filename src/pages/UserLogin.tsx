@@ -11,7 +11,6 @@ const UserTokenPage = () => {
         return (
             <div>
                 <h4>User Info</h4>
-            
                 <pre>{ethAddress}</pre>
                 <pre>{OCId}</pre>
             </div>

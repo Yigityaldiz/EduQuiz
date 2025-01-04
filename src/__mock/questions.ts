@@ -2,7 +2,7 @@ import { Question } from "@/features/quiz/types/question";
 
 export const questions: Question[] = [
   {
-    question_id: "q1",
+    question_id: "q1", //  id olacak 
     quiz_id: "quiz1",
     question_text: "What is the primary purpose of blockchain technology?",
     points: 10,
