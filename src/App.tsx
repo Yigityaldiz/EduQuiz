@@ -1,33 +1,78 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import "./App.css";
-
+import { lazy, Suspense } from "react";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 import OCConnectWrapper from "./layouts/OCConnectWrapper";
-import CreateQuiz from "./pages/CreateQuiz";
 
-import Questions from "./pages/Questions";
-import UserPage from "./pages/UserPage";
+// Lazy-loaded components
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const CreateQuiz = lazy(() => import("./pages/CreateQuiz"));
+const Questions = lazy(() => import("./pages/Questions"));
+const UserPage = lazy(() => import("./pages/UserPage"));
 
-function App() {
-  return (
-    <div>
+// Lazy loading wrapper
+const LazyLoad = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+);
+
+// Router configuration
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
       <OCConnectWrapper>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-
-          <Route path="/redirect" element={
-
-            <CreateQuiz />
-
-          } />
-          <Route path="/questions" element={<Questions />} />
-          <Route path="/userPage/:id" element={<UserPage />} />
-        </Routes>
+        <Outlet />
       </OCConnectWrapper>
-    </div>
-  );
-}
+    ),
+    children: [
+      {
+        index: true,
+        element: (
+          <LazyLoad>
+            <Home />
+          </LazyLoad>
+        ),
+      },
+      {
+        path: "about",
+        element: (
+          <LazyLoad>
+            <About />
+          </LazyLoad>
+        ),
+      },
+      {
+        path: "create-quiz",
+        element: (
+          <LazyLoad>
+            <CreateQuiz />
+          </LazyLoad>
+        ),
+      },
+      {
+        path: "questions",
+        element: (
+          <LazyLoad>
+            <Questions />
+          </LazyLoad>
+        ),
+      },
+      {
+        path: "user",
+        element: (
+          <LazyLoad>
+            <UserPage />
+          </LazyLoad>
+        ),
+      },
+    ],
+  },
+]);
 
-export default App;
+export default function App() {
+  return <RouterProvider router={router} />;
+}
