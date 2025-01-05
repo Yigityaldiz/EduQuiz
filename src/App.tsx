@@ -8,6 +8,9 @@ import {
 import OCConnectWrapper from "./layouts/OCConnectWrapper";
 import { Toaster } from "./components/ui/toaster";
 import { QuizPage } from "./pages/quiz";
+import { WagmiConfig } from 'wagmi'
+import config from './config/wagmiClient'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // Lazy-loaded components
 const Home = lazy(() => import("./pages/Home"));
@@ -20,6 +23,9 @@ const UserPage = lazy(() => import("./pages/UserPage"));
 const LazyLoad = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
 );
+
+// QueryClient oluştur
+const queryClient = new QueryClient();
 
 // Router configuration
 const router = createBrowserRouter([
@@ -52,7 +58,9 @@ const router = createBrowserRouter([
         path: "create-quiz",
         element: (
           <LazyLoad>
-            <CreateQuiz />
+            <WagmiConfig config={config}>
+              <CreateQuiz />
+            </WagmiConfig>
           </LazyLoad>
         ),
       },
@@ -92,5 +100,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }

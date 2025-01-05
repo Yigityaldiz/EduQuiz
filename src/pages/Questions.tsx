@@ -39,8 +39,10 @@ export default function Questions() {
             </p>
           </div>
         </div>
-        
-        <QuestionList />
+
+        <QuestionList questions={[]} onComplete={function (results: { score: number; correctAnswers: number; timeTaken: number; }): void {
+          throw new Error("Function not implemented.");
+        }} />
       </div>
 
       <img

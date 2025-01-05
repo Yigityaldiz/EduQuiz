@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useOCAuth } from "@opencampus/ocid-connect-js";
 import { useNavigate } from "react-router-dom";
+import { injected, useConnect, useAccount, useSwitchChain, useReadContract, useWriteContract } from 'wagmi'
+
+import { wagmiContractConfig } from '../contract/contract'
+import { abi, address } from "@/contract/EduQuiz"
 import "@mdxeditor/editor/style.css";
 import {
   MDXEditor,
@@ -200,8 +204,22 @@ const CreateQuiz = () => {
   /* -------------------- onSubmitParameters (Parametre Formu Submit) -------------------- */
   const onSubmitParameters = async (data: QuizData) => {
     try {
+      // Akıllı sözleşme işlemi
+      await writeContract({
+        abi,
+        address: '0x03731969784155A7F5833e89d467104b3a2C1AE1',
+        functionName: 'createQuiz',
+        args: [
+          data.title,
+          BigInt(data.liquidity),
+          BigInt(Date.now()),
+          BigInt(Date.now() + data.duration * 60 * 1000),
+          BigInt(data.liquidity),
+
+        ],
+      });
+
       // 1) quizData state’ini güncelle
-      //    (title, description, winnerCount, duration, liquidity)
       setQuizData((prev) => ({
         ...prev,
         title: data.title,
@@ -215,8 +233,6 @@ const CreateQuiz = () => {
       const userId = localStorage.getItem("userId") || "";
       const payload = {
         ...quizData,
-        // quizData içindeki questions vb. koruyoruz
-        // ama parametre formundan gelen data’yı overwrite ediyoruz
         title: data.title,
         description: data.description,
         winnerCount: data.winnerCount,
@@ -248,6 +264,65 @@ const CreateQuiz = () => {
   const [showLiquidityFields, setShowLiquidityFields] =
     useState<boolean>(false);
 
+  const { connect } = useConnect();
+  const { switchChain } = useSwitchChain();
+  const { address, isConnected } = useAccount();
+
+  const handleConnect = async () => {
+    try {
+      await connect({ connector: injected() });
+    } catch (error) {
+      console.error("Bağlantı hatası:", error);
+    }
+  };
+
+  const handleSwitchChain = async () => {
+    try {
+      await switchChain({ chainId: 656476 });
+    } catch (error) {
+      console.error("Zincir değiştirme hatası:", error);
+    }
+  };
+  const { writeContract } = useWriteContract()
+
+  const handleTestWriteContract = async () => {
+    try {
+      await writeContract({
+        abi,
+        address: '0x03731969784155A7F5833e89d467104b3a2C1AE1',
+        functionName: 'createQuiz',
+        args: [
+          "Test Quiz",
+          BigInt(1000),
+          BigInt(Date.now()),
+          BigInt(Date.now() + 60 * 60 * 1000),
+          BigInt(1000),
+        ],
+      });
+
+    } catch (error) {
+      console.error("Transaction gönderilirken hata oluştu:", error);
+    }
+  };
+
+  const { data: Course } = useReadContract({
+    ...wagmiContractConfig,
+    functionName: 'getCourse',
+    args: [BigInt(1)],
+  });
+
+  const handleReadContract = () => {
+    try {
+      console.log(Course);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const displayAddress = address
+    ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
+    : '';
+
   /* -------------------- Render -------------------- */
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
@@ -263,11 +338,10 @@ const CreateQuiz = () => {
           {step === "questions" && (
             <button
               type="button"
-              className={`bg-blue-500 text-white px-4 py-2 rounded-md ${
-                quizData.questions.length === 0
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
-              }`}
+              className={`bg-blue-500 text-white px-4 py-2 rounded-md ${quizData.questions.length === 0
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+                }`}
               onClick={() => {
                 if (quizData.questions.length > 0) {
                   setStep("parameters");
@@ -287,9 +361,8 @@ const CreateQuiz = () => {
           {/* Adım Göstergeleri */}
           <div className="flex justify-center mb-6">
             <div
-              className={`flex items-center ${
-                step === "questions" ? "text-blue-500" : "text-gray-500"
-              }`}
+              className={`flex items-center ${step === "questions" ? "text-blue-500" : "text-gray-500"
+                }`}
             >
               <div className="w-8 h-8 rounded-full border-2 border-blue-500 flex items-center justify-center">
                 1
@@ -298,9 +371,8 @@ const CreateQuiz = () => {
             </div>
             <div className="mx-4">→</div>
             <div
-              className={`flex items-center ${
-                step === "parameters" ? "text-blue-500" : "text-gray-500"
-              }`}
+              className={`flex items-center ${step === "parameters" ? "text-blue-500" : "text-gray-500"
+                }`}
             >
               <div className="w-8 h-8 rounded-full border-2 border-blue-500 flex items-center justify-center">
                 2
@@ -312,13 +384,13 @@ const CreateQuiz = () => {
           {/* QUESTIONS ADIMI */}
           {step === "questions" && (
             <div className="grid grid-cols-4 gap-6">
-              {/* SOL FORM (Soru Oluşturma) */}
+              {/* SOL TARAF: Soru Formu */}
               <div className="col-span-3">
                 <form className="space-y-6">
-                  {/* Soru Tipi */}
+                  {/* Soru Tipi Seçimi */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Select Question Type
+                      Question Type
                     </label>
                     <Controller
                       name="questionType"
@@ -326,154 +398,82 @@ const CreateQuiz = () => {
                       render={({ field }) => (
                         <select
                           {...field}
-                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm h-10 p-2"
+                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                         >
-                          <option value="multiple-choice">
-                            Multiple Choice
-                          </option>
+                          <option value="multiple-choice">Multiple Choice</option>
                           <option value="true-false">True/False</option>
                         </select>
                       )}
                     />
                   </div>
 
-                  {/* Soru (MDXEditor) */}
+                  {/* Soru Metni */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Enter the question below
+                      Question Text
                     </label>
                     <Controller
                       name="markdown"
                       control={controlQuestion}
                       render={({ field }) => (
-                        <MDXEditor
-                          key={editorKey}
-                          markdown={field.value}
-                          onChange={field.onChange}
-                          plugins={[
-                            headingsPlugin(),
-                            listsPlugin(),
-                            quotePlugin(),
-                            thematicBreakPlugin(),
-                            markdownShortcutPlugin(),
-                            directivesPlugin({
-                              directiveDescriptors: [
-                                AdmonitionDirectiveDescriptor,
-                              ],
-                            }),
-                            tablePlugin(),
-                            toolbarPlugin({
-                              toolbarContents: () => (
-                                <div className="flex space-x-2">
-                                  <UndoRedo />
-                                  <BlockTypeSelect />
-                                  <BoldItalicUnderlineToggles />
-                                  <CodeToggle />
-                                  <InsertTable />
-                                  <InsertThematicBreak />
-                                  <InsertAdmonition />
-                                  <ListsToggle />
-                                </div>
-                              ),
-                            }),
-                          ]}
-                          className="border border-gray-300 rounded-md p-2 h-40"
+                        <textarea
+                          {...field}
+                          rows={4}
+                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                          placeholder="Enter your question here"
                         />
                       )}
                     />
                   </div>
 
-                  {/* ANSWERS */}
+                  {/* Cevaplar */}
                   <div>
-                    <p className="text-lg font-medium">
-                      Enter the answer options and select the correct one
-                    </p>
-                    <div className="flex flex-col space-y-4 mt-4">
-                      {watchQuestionType === "true-false"
-                        ? fieldsAnswer.map((item, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center space-x-2"
-                            >
+                    <label className="block text-sm font-medium text-gray-700">
+                      Answers
+                    </label>
+                    <div className="space-y-2">
+                      {fieldsAnswer.map((item, index) => (
+                        <div key={item.id} className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            checked={item.isCorrect}
+                            onChange={() => {
+                              update(index, {
+                                ...item,
+                                isCorrect: !item.isCorrect,
+                              });
+                            }}
+                            className="h-4 w-4 text-blue-600 border-gray-300 rounded"
+                          />
+                          <Controller
+                            name={`answers.${index}.value`}
+                            control={controlQuestion}
+                            render={({ field }) => (
                               <input
-                                type="radio"
-                                checked={item.isCorrect}
-                                onChange={() => {
-                                  // Tıklanınca tüm cevapları false yap, index'i true
-                                  fieldsAnswer.forEach((_, idx) => {
-                                    update(idx, {
-                                      ...fieldsAnswer[idx],
-                                      isCorrect: idx === index,
-                                    });
-                                  });
-                                }}
-                                className="mr-2 h-4 w-4 text-blue-600 border-gray-300"
+                                {...field}
+                                type="text"
+                                className="flex-1 border border-gray-300 rounded-md p-2"
+                                placeholder={`Answer ${index + 1}`}
                               />
-                              <Controller
-                                name={`answers.${index}.value`}
-                                control={controlQuestion}
-                                render={({ field }) => (
-                                  <input
-                                    {...field}
-                                    placeholder={index === 0 ? "True" : "False"}
-                                    className="flex-1 border border-gray-300 rounded-md p-2"
-                                  />
-                                )}
-                              />
-                            </div>
-                          ))
-                        : fieldsAnswer.map((item, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center space-x-2"
-                            >
-                              <input
-                                type="radio"
-                                checked={item.isCorrect}
-                                onChange={() => {
-                                  fieldsAnswer.forEach((_, idx) => {
-                                    update(idx, {
-                                      ...fieldsAnswer[idx],
-                                      isCorrect: idx === index,
-                                    });
-                                  });
-                                }}
-                                className="mr-2 h-4 w-4 text-blue-600 border-gray-300"
-                              />
-                              <Controller
-                                name={`answers.${index}.value`}
-                                control={controlQuestion}
-                                render={({ field }) => (
-                                  <input
-                                    {...field}
-                                    placeholder={`Answer option ${index + 1}`}
-                                    className="flex-1 border border-gray-300 rounded-md p-2"
-                                  />
-                                )}
-                              />
-                              {fieldsAnswer.length > 1 && (
-                                <button
-                                  type="button"
-                                  className="text-red-500 hover:text-red-700"
-                                  onClick={() => remove(index)}
-                                >
-                                  Sil
-                                </button>
-                              )}
-                            </div>
-                          ))}
-                    </div>
-
-                    {/* Add Answer Option (Multiple Choice) */}
-                    {watchQuestionType !== "true-false" && (
+                            )}
+                          />
+                          <button
+                            type="button"
+                            className="text-red-500 hover:text-red-700"
+                            onClick={() => remove(index)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      ))}
                       <button
                         type="button"
-                        className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md"
+                        className="mt-2 bg-green-500 text-white px-4 py-2 rounded-md"
                         onClick={() => append({ value: "", isCorrect: false })}
                       >
-                        Add Answer Option +
+                        Add Answer
                       </button>
-                    )}
+                    </div>
                   </div>
 
                   {/* Soru Kaydet Butonu */}
@@ -483,9 +483,7 @@ const CreateQuiz = () => {
                       className="bg-blue-500 text-white px-6 py-3 rounded-md w-full"
                       onClick={handleSaveOrUpdateQuestion}
                     >
-                      {editingIndex !== null
-                        ? "Update Question"
-                        : "Add Question +"}
+                      {editingIndex !== null ? "Update Question" : "Add Question"}
                     </button>
                   </div>
                 </form>
@@ -624,9 +622,9 @@ const CreateQuiz = () => {
                     <button
                       type="button"
                       className="bg-indigo-500 text-white px-4 py-2 rounded-md"
-                      onClick={() => alert("Cüzdan bağlama işlemi burada")}
+                      onClick={handleConnect}
                     >
-                      Connect Wallet
+                      {isConnected ? `Connected: ${displayAddress}` : 'Connect Wallet'}
                     </button>
                     <div>
                       <label className="block text-sm font-medium text-gray-700">
@@ -664,6 +662,20 @@ const CreateQuiz = () => {
                     className="bg-green-500 text-white px-6 py-3 rounded-md"
                   >
                     Submit Quiz
+                  </button>
+                  <button
+                    type="button"
+                    className="bg-red-500 text-white px-6 py-3 rounded-md"
+                    onClick={handleReadContract}
+                  >
+                    Read Contract
+                  </button>
+                  <button
+                    type="button"
+                    className="bg-yellow-500 text-white px-6 py-3 rounded-md"
+                    onClick={handleTestWriteContract}
+                  >
+                    Test Write Contract
                   </button>
                 </div>
               </form>

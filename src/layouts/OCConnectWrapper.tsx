@@ -14,7 +14,7 @@ export default function OCConnectWrapper({
   children: React.ReactNode;
 }) {
   const opts: Options = {
-    redirectUri: "http://localhost:5173/redirect",
+    redirectUri: "http://localhost:5173/create-quiz",
     referralCode: "PARTNER6",
   };
 
