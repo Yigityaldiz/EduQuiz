@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useForm, Controller, useFieldArray } from 'react-hook-form';
-import { useOCAuth } from '@opencampus/ocid-connect-js';
-import { useNavigate } from 'react-router-dom';
-import '@mdxeditor/editor/style.css';
+import { useState, useEffect } from "react";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
+import { useOCAuth } from "@opencampus/ocid-connect-js";
+import { useNavigate } from "react-router-dom";
+import "@mdxeditor/editor/style.css";
 import {
   MDXEditor,
   headingsPlugin,
@@ -22,8 +22,8 @@ import {
   directivesPlugin,
   AdmonitionDirectiveDescriptor,
   tablePlugin,
-} from '@mdxeditor/editor';
-import axios from 'axios';
+} from "@mdxeditor/editor";
+import axios from "axios";
 
 /* -------------------- Arayüz Tanımları -------------------- */
 interface Answer {
@@ -32,7 +32,7 @@ interface Answer {
 }
 
 interface Question {
-  questionType: string;  // 'multiple-choice' | 'true-false'
+  questionType: string; // 'multiple-choice' | 'true-false'
   markdown: string;
   answers: Answer[];
 }
@@ -50,28 +50,28 @@ interface QuizData {
 const CreateQuiz = () => {
   const navigate = useNavigate();
   /* -------------------- Step State -------------------- */
-  const [step, setStep] = useState<'questions' | 'parameters'>('questions');
+  const [step, setStep] = useState<"questions" | "parameters">("questions");
 
   /* -------------------- OCAuth (UserId) -------------------- */
   const { OCId, ethAddress } = useOCAuth();
   useEffect(() => {
     if (!OCId || !ethAddress) {
-      const randomUserId = 'quest.edu_Ox8e3d';
-      localStorage.setItem('userId', randomUserId);
+      const randomUserId = "quest.edu_Ox8e3d";
+      localStorage.setItem("userId", randomUserId);
     } else {
       const userId = `${OCId}_${ethAddress}`;
-      localStorage.setItem('userId', userId);
+      localStorage.setItem("userId", userId);
     }
   }, [OCId, ethAddress]);
 
   /* -------------------- Quiz Data State -------------------- */
   const [quizData, setQuizData] = useState<QuizData>({
-    userId: '',
-    title: '',
-    description: '',
+    userId: "",
+    title: "",
+    description: "",
     winnerCount: 1,
     duration: 60,
-    liquidity: '',
+    liquidity: "",
     questions: [],
   });
 
@@ -88,11 +88,11 @@ const CreateQuiz = () => {
     reset: resetQuestion,
   } = useForm<Question>({
     defaultValues: {
-      questionType: 'multiple-choice',
-      markdown: '',
+      questionType: "multiple-choice",
+      markdown: "",
       answers: [
-        { value: '', isCorrect: false },
-        { value: '', isCorrect: false },
+        { value: "", isCorrect: false },
+        { value: "", isCorrect: false },
       ],
     },
   });
@@ -104,15 +104,15 @@ const CreateQuiz = () => {
     update,
   } = useFieldArray({
     control: controlQuestion,
-    name: 'answers',
+    name: "answers",
   });
 
-  const watchQuestionType = watchQuestion('questionType');
+  const watchQuestionType = watchQuestion("questionType");
 
   // Debug amaçlı
   useEffect(() => {
     const sub = watchQuestion((data) => {
-      console.log('Question Form data:', data);
+      console.log("Question Form data:", data);
     });
     return () => sub.unsubscribe();
   }, [watchQuestion]);
@@ -128,23 +128,27 @@ const CreateQuiz = () => {
 
   /* -------------------- LocalStorage: quizData yükleme -------------------- */
   useEffect(() => {
-    const saved = localStorage.getItem('quizData');
+    const saved = localStorage.getItem("quizData");
     if (saved) {
       try {
         const parsed: QuizData = JSON.parse(saved);
         setQuizData(parsed);
         resetParameters(parsed);
       } catch (err) {
-        console.error('Error parsing quizData from localStorage:', err);
+        console.error("Error parsing quizData from localStorage:", err);
       }
     }
   }, [resetParameters]);
 
   /* -------------------- LocalStorage: quizData kaydetme -------------------- */
   useEffect(() => {
-    localStorage.setItem('quizData', JSON.stringify(quizData));
-    console.log('Quiz data saved to localStorage:', quizData);
+    localStorage.setItem("quizData", JSON.stringify(quizData));
+    console.log("Quiz data saved to localStorage:", quizData);
   }, [quizData]);
+
+  useEffect(() => {
+    resetParameters(quizData);
+  }, []);
 
   /* -------------------- Soru Kaydet / Güncelle -------------------- */
   const handleSaveOrUpdateQuestion = () => {
@@ -168,16 +172,16 @@ const CreateQuiz = () => {
         ...quizData,
         questions: [...quizData.questions, newQuestion],
       });
-      console.log('New question added.');
+      console.log("New question added.");
     }
 
     // Form sıfırlama
     resetQuestion({
-      questionType: 'multiple-choice',
-      markdown: '',
+      questionType: "multiple-choice",
+      markdown: "",
       answers: [
-        { value: '', isCorrect: false },
-        { value: '', isCorrect: false },
+        { value: "", isCorrect: false },
+        { value: "", isCorrect: false },
       ],
     });
     setEditorKey((prev) => prev + 1);
@@ -189,7 +193,7 @@ const CreateQuiz = () => {
     resetQuestion(q);
     setEditorKey((prev) => prev + 1);
     setEditingIndex(index);
-    setStep('questions');
+    setStep("questions");
     console.log(`Editing question ${index + 1}`);
   };
 
@@ -204,11 +208,11 @@ const CreateQuiz = () => {
         description: data.description,
         winnerCount: data.winnerCount,
         duration: data.duration,
-        liquidity: data.liquidity ?? '',
+        liquidity: data.liquidity ?? "",
       }));
 
       // 2) userId’yi localStorage’dan al
-      const userId = localStorage.getItem('userId') || '';
+      const userId = localStorage.getItem("userId") || "";
       const payload = {
         ...quizData,
         // quizData içindeki questions vb. koruyoruz
@@ -217,30 +221,32 @@ const CreateQuiz = () => {
         description: data.description,
         winnerCount: data.winnerCount,
         duration: data.duration,
-        liquidity: data.liquidity ?? '',
+        liquidity: data.liquidity ?? "",
         userId,
       };
 
       // 3) axios post isteği
-      const response = await axios.post('https://api.eduquiz.space/api/quizzes', payload);
+      const response = await axios.post(
+        "https://api.eduquiz.space/api/quizzes",
+        payload
+      );
 
-      console.log('Quiz başarıyla gönderildi:', response.data);
-      if (response.data.status === 'success') {
-        alert('Quiz created successfully!');
-        navigate(`/userPage/${userId}`);
+      console.log("Quiz başarıyla gönderildi:", response.data);
+      if (response.data.status === "success") {
+        alert("Quiz created successfully!");
+        navigate(`/user/${userId}`);
+      } else {
+        alert("An error occurred, please try again.");
       }
-      else {
-        alert('An error occurred, please try again.');
-      }
-
     } catch (error) {
-      console.error('Quiz gönderilirken hata oluştu:', error);
-      alert('An error occurred, please try again.');
+      console.error("Quiz gönderilirken hata oluştu:", error);
+      alert("An error occurred, please try again.");
     }
   };
 
   /* -------------------- showLiquidityFields State -------------------- */
-  const [showLiquidityFields, setShowLiquidityFields] = useState<boolean>(false);
+  const [showLiquidityFields, setShowLiquidityFields] =
+    useState<boolean>(false);
 
   /* -------------------- Render -------------------- */
   return (
@@ -254,16 +260,19 @@ const CreateQuiz = () => {
               You can create your quiz by following the steps below.
             </p>
           </div>
-          {step === 'questions' && (
+          {step === "questions" && (
             <button
               type="button"
-              className={`bg-blue-500 text-white px-4 py-2 rounded-md ${quizData.questions.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+              className={`bg-blue-500 text-white px-4 py-2 rounded-md ${
+                quizData.questions.length === 0
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
               onClick={() => {
                 if (quizData.questions.length > 0) {
-                  setStep('parameters');
+                  setStep("parameters");
                 } else {
-                  alert('Please add at least one question before proceeding.');
+                  alert("Please add at least one question before proceeding.");
                 }
               }}
               disabled={quizData.questions.length === 0}
@@ -277,26 +286,40 @@ const CreateQuiz = () => {
         <div className="p-6">
           {/* Adım Göstergeleri */}
           <div className="flex justify-center mb-6">
-            <div className={`flex items-center ${step === 'questions' ? 'text-blue-500' : 'text-gray-500'}`}>
-              <div className="w-8 h-8 rounded-full border-2 border-blue-500 flex items-center justify-center">1</div>
+            <div
+              className={`flex items-center ${
+                step === "questions" ? "text-blue-500" : "text-gray-500"
+              }`}
+            >
+              <div className="w-8 h-8 rounded-full border-2 border-blue-500 flex items-center justify-center">
+                1
+              </div>
               <span className="ml-2">Questions</span>
             </div>
             <div className="mx-4">→</div>
-            <div className={`flex items-center ${step === 'parameters' ? 'text-blue-500' : 'text-gray-500'}`}>
-              <div className="w-8 h-8 rounded-full border-2 border-blue-500 flex items-center justify-center">2</div>
+            <div
+              className={`flex items-center ${
+                step === "parameters" ? "text-blue-500" : "text-gray-500"
+              }`}
+            >
+              <div className="w-8 h-8 rounded-full border-2 border-blue-500 flex items-center justify-center">
+                2
+              </div>
               <span className="ml-2">Parameters</span>
             </div>
           </div>
 
           {/* QUESTIONS ADIMI */}
-          {step === 'questions' && (
+          {step === "questions" && (
             <div className="grid grid-cols-4 gap-6">
               {/* SOL FORM (Soru Oluşturma) */}
               <div className="col-span-3">
                 <form className="space-y-6">
                   {/* Soru Tipi */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Select Question Type</label>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Select Question Type
+                    </label>
                     <Controller
                       name="questionType"
                       control={controlQuestion}
@@ -305,7 +328,9 @@ const CreateQuiz = () => {
                           {...field}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm h-10 p-2"
                         >
-                          <option value="multiple-choice">Multiple Choice</option>
+                          <option value="multiple-choice">
+                            Multiple Choice
+                          </option>
                           <option value="true-false">True/False</option>
                         </select>
                       )}
@@ -314,7 +339,9 @@ const CreateQuiz = () => {
 
                   {/* Soru (MDXEditor) */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Enter the question below</label>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Enter the question below
+                    </label>
                     <Controller
                       name="markdown"
                       control={controlQuestion}
@@ -330,7 +357,9 @@ const CreateQuiz = () => {
                             thematicBreakPlugin(),
                             markdownShortcutPlugin(),
                             directivesPlugin({
-                              directiveDescriptors: [AdmonitionDirectiveDescriptor],
+                              directiveDescriptors: [
+                                AdmonitionDirectiveDescriptor,
+                              ],
                             }),
                             tablePlugin(),
                             toolbarPlugin({
@@ -356,85 +385,91 @@ const CreateQuiz = () => {
 
                   {/* ANSWERS */}
                   <div>
-                    <p className="text-lg font-medium">Enter the answer options and select the correct one</p>
+                    <p className="text-lg font-medium">
+                      Enter the answer options and select the correct one
+                    </p>
                     <div className="flex flex-col space-y-4 mt-4">
-                      {watchQuestionType === 'true-false' ? (
-                        fieldsAnswer.map((item, index) => (
-                          <div key={index} className="flex items-center space-x-2">
-                            <input
-                              type="radio"
-                              checked={item.isCorrect}
-                              onChange={() => {
-                                // Tıklanınca tüm cevapları false yap, index'i true
-                                fieldsAnswer.forEach((_, idx) => {
-                                  update(idx, {
-                                    ...fieldsAnswer[idx],
-                                    isCorrect: idx === index,
+                      {watchQuestionType === "true-false"
+                        ? fieldsAnswer.map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center space-x-2"
+                            >
+                              <input
+                                type="radio"
+                                checked={item.isCorrect}
+                                onChange={() => {
+                                  // Tıklanınca tüm cevapları false yap, index'i true
+                                  fieldsAnswer.forEach((_, idx) => {
+                                    update(idx, {
+                                      ...fieldsAnswer[idx],
+                                      isCorrect: idx === index,
+                                    });
                                   });
-                                });
-                              }}
-                              className="mr-2 h-4 w-4 text-blue-600 border-gray-300"
-                            />
-                            <Controller
-                              name={`answers.${index}.value`}
-                              control={controlQuestion}
-                              render={({ field }) => (
-                                <input
-                                  {...field}
-                                  placeholder={index === 0 ? 'True' : 'False'}
-                                  className="flex-1 border border-gray-300 rounded-md p-2"
-                                />
-                              )}
-                            />
-                          </div>
-                        ))
-                      ) : (
-                        fieldsAnswer.map((item, index) => (
-                          <div key={index} className="flex items-center space-x-2">
-                            <input
-                              type="radio"
-                              checked={item.isCorrect}
-                              onChange={() => {
-                                fieldsAnswer.forEach((_, idx) => {
-                                  update(idx, {
-                                    ...fieldsAnswer[idx],
-                                    isCorrect: idx === index,
+                                }}
+                                className="mr-2 h-4 w-4 text-blue-600 border-gray-300"
+                              />
+                              <Controller
+                                name={`answers.${index}.value`}
+                                control={controlQuestion}
+                                render={({ field }) => (
+                                  <input
+                                    {...field}
+                                    placeholder={index === 0 ? "True" : "False"}
+                                    className="flex-1 border border-gray-300 rounded-md p-2"
+                                  />
+                                )}
+                              />
+                            </div>
+                          ))
+                        : fieldsAnswer.map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center space-x-2"
+                            >
+                              <input
+                                type="radio"
+                                checked={item.isCorrect}
+                                onChange={() => {
+                                  fieldsAnswer.forEach((_, idx) => {
+                                    update(idx, {
+                                      ...fieldsAnswer[idx],
+                                      isCorrect: idx === index,
+                                    });
                                   });
-                                });
-                              }}
-                              className="mr-2 h-4 w-4 text-blue-600 border-gray-300"
-                            />
-                            <Controller
-                              name={`answers.${index}.value`}
-                              control={controlQuestion}
-                              render={({ field }) => (
-                                <input
-                                  {...field}
-                                  placeholder={`Answer option ${index + 1}`}
-                                  className="flex-1 border border-gray-300 rounded-md p-2"
-                                />
+                                }}
+                                className="mr-2 h-4 w-4 text-blue-600 border-gray-300"
+                              />
+                              <Controller
+                                name={`answers.${index}.value`}
+                                control={controlQuestion}
+                                render={({ field }) => (
+                                  <input
+                                    {...field}
+                                    placeholder={`Answer option ${index + 1}`}
+                                    className="flex-1 border border-gray-300 rounded-md p-2"
+                                  />
+                                )}
+                              />
+                              {fieldsAnswer.length > 1 && (
+                                <button
+                                  type="button"
+                                  className="text-red-500 hover:text-red-700"
+                                  onClick={() => remove(index)}
+                                >
+                                  Sil
+                                </button>
                               )}
-                            />
-                            {fieldsAnswer.length > 1 && (
-                              <button
-                                type="button"
-                                className="text-red-500 hover:text-red-700"
-                                onClick={() => remove(index)}
-                              >
-                                Sil
-                              </button>
-                            )}
-                          </div>
-                        ))
-                      )}
+                            </div>
+                          ))}
                     </div>
 
                     {/* Add Answer Option (Multiple Choice) */}
-                    {watchQuestionType !== 'true-false' && (
+                    {watchQuestionType !== "true-false" && (
                       <button
                         type="button"
                         className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md"
-                        onClick={() => append({ value: '', isCorrect: false })}
+                        onClick={() => append({ value: "", isCorrect: false })}
                       >
                         Add Answer Option +
                       </button>
@@ -448,7 +483,9 @@ const CreateQuiz = () => {
                       className="bg-blue-500 text-white px-6 py-3 rounded-md w-full"
                       onClick={handleSaveOrUpdateQuestion}
                     >
-                      {editingIndex !== null ? 'Update Question' : 'Add Question +'}
+                      {editingIndex !== null
+                        ? "Update Question"
+                        : "Add Question +"}
                     </button>
                   </div>
                 </form>
@@ -482,18 +519,23 @@ const CreateQuiz = () => {
           )}
 
           {/* PARAMETERS ADIMI */}
-          {step === 'parameters' && (
+          {step === "parameters" && (
             <div className="p-6">
               {/* 
                 Dikkat: "onSubmit" prop ile handleSubmitParameters fonksiyonu 
                 React Hook Form'a bağlı "onSubmitParameters" callback’ini tetikliyor
               */}
-              <form onSubmit={handleSubmitParameters(onSubmitParameters)} className="space-y-6">
+              <form
+                onSubmit={handleSubmitParameters(onSubmitParameters)}
+                className="space-y-6"
+              >
                 <h2 className="text-2xl font-semibold mb-4">Quiz Parameters</h2>
 
                 {/* Title */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Title</label>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Title
+                  </label>
                   <Controller
                     name="title"
                     control={controlParameters}
@@ -510,7 +552,9 @@ const CreateQuiz = () => {
 
                 {/* Description */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Description</label>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Description
+                  </label>
                   <Controller
                     name="description"
                     control={controlParameters}
@@ -527,7 +571,9 @@ const CreateQuiz = () => {
 
                 {/* Winner Count */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Winner Count</label>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Winner Count
+                  </label>
                   <Controller
                     name="winnerCount"
                     control={controlParameters}
@@ -544,7 +590,9 @@ const CreateQuiz = () => {
 
                 {/* Duration */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Duration (minutes)</label>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Duration (minutes)
+                  </label>
                   <Controller
                     name="duration"
                     control={controlParameters}
@@ -566,7 +614,7 @@ const CreateQuiz = () => {
                     className="bg-blue-500 text-white px-4 py-2 rounded-md"
                     onClick={() => setShowLiquidityFields(!showLiquidityFields)}
                   >
-                    {showLiquidityFields ? 'Remove Liquidity' : 'Add Liquidity'}
+                    {showLiquidityFields ? "Remove Liquidity" : "Add Liquidity"}
                   </button>
                 </div>
 
@@ -576,12 +624,14 @@ const CreateQuiz = () => {
                     <button
                       type="button"
                       className="bg-indigo-500 text-white px-4 py-2 rounded-md"
-                      onClick={() => alert('Cüzdan bağlama işlemi burada')}
+                      onClick={() => alert("Cüzdan bağlama işlemi burada")}
                     >
                       Connect Wallet
                     </button>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">Liquidity</label>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Liquidity
+                      </label>
                       <Controller
                         name="liquidity"
                         control={controlParameters}
@@ -603,7 +653,7 @@ const CreateQuiz = () => {
                   <button
                     type="button"
                     className="bg-gray-500 text-white px-6 py-3 rounded-md"
-                    onClick={() => setStep('questions')}
+                    onClick={() => setStep("questions")}
                   >
                     Back to Questions
                   </button>
@@ -612,7 +662,6 @@ const CreateQuiz = () => {
                   <button
                     type="submit"
                     className="bg-green-500 text-white px-6 py-3 rounded-md"
-
                   >
                     Submit Quiz
                   </button>

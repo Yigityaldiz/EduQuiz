@@ -49,8 +49,8 @@ export default function UserPage() {
       });
   }, [id]);
 
-  const handleCopyQuizLink = async (slug: string) => {
-    await navigator.clipboard.writeText("localhost:5173/quiz/" + slug);
+  const handleCopyQuizLink = async (quizId: string) => {
+    await navigator.clipboard.writeText("localhost:5173/quiz/" + quizId);
     toast({
       title: "Link copied to clipboard",
       description: "You can now share this link with your audience.",
@@ -142,7 +142,7 @@ export default function UserPage() {
                     <TableCell className="text-right">
                       <button
                         className="text-blue-500"
-                        onClick={() => handleCopyQuizLink(quiz.slug)}
+                        onClick={() => handleCopyQuizLink(quiz.id)}
                       >
                         <Share2 />
                       </button>
