@@ -7,7 +7,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import Grow from "@/components/ui/grow";
 import PulsatingButton from "@/components/ui/pulsating-button";
 
-import { useOCAuth } from "@opencampus/ocid-connect-js";
+// import { useOCAuth } from "@opencampus/ocid-connect-js";
 
 import { cn } from "@/lib/utils";
 import {
@@ -24,11 +24,11 @@ import {
 import * as React from "react";
 
 function Home() {
-  const { authState } = useOCAuth();
+  // const { authState } = useOCAuth();
 
-  React.useEffect(() => {
-    console.log(authState);
-  }, [authState]);
+  // React.useEffect(() => {
+  //   console.log(authState);
+  // }, [authState]);
 
   return (
     <React.Fragment>

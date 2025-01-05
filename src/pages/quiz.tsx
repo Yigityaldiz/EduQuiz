@@ -32,8 +32,6 @@ export function QuizPage() {
       try {
         setIsLoading(true);
         const quizData = await quizApi.getQuiz(id, "quest.edu_Ox8e3d");
-        console.log(quizData);
-        console.log(quizData);
         setQuiz(quizData);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch quiz");
@@ -48,7 +46,7 @@ export function QuizPage() {
   const handleQuizComplete = (results: {
     score: number;
     correctAnswers: number;
-    timeTaken: number;
+    // timeTaken: number;
   }) => {
     setResult((prev) => ({ ...prev, ...results }));
     setIsFinished(true);

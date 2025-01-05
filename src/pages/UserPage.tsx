@@ -91,8 +91,6 @@ export default function UserPage() {
     );
   }
 
-  console.log(quizzes);
-
   return (
     <div className="">
       <div className="border-b border-gray-200">

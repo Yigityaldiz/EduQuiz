@@ -2,8 +2,8 @@ import { useOCAuth } from '@opencampus/ocid-connect-js';
 
 const UserTokenPage = () => {
 
-    const { authState, ocAuth, OCId, ethAddress } = useOCAuth();
-    console.log(ocAuth);
+    const { authState, OCId, ethAddress } = useOCAuth();
+    // console.log(ocAuth);
 
     if (authState.error !== undefined) {
         return <div>Error: { "userpageerrors" + authState.error.message}</div>;

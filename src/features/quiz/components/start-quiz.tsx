@@ -1,5 +1,3 @@
-import * as React from "react";
-
 interface StartQuizProps {
   quizTitle: string;
   description: string;
@@ -13,7 +11,7 @@ export function StartQuiz({
   quizTitle,
   description,
   winnerCount,
-  duration,
+  // duration,
   liquidity,
   onStart,
 }: StartQuizProps) {

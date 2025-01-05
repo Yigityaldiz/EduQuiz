@@ -17,26 +17,26 @@ import { parseEther } from "viem";
 import { wagmiContractConfig } from "../contract/contract";
 
 import "@mdxeditor/editor/style.css";
-import {
-  MDXEditor,
-  headingsPlugin,
-  listsPlugin,
-  quotePlugin,
-  thematicBreakPlugin,
-  markdownShortcutPlugin,
-  toolbarPlugin,
-  BoldItalicUnderlineToggles,
-  BlockTypeSelect,
-  UndoRedo,
-  CodeToggle,
-  InsertTable,
-  InsertThematicBreak,
-  InsertAdmonition,
-  ListsToggle,
-  directivesPlugin,
-  AdmonitionDirectiveDescriptor,
-  tablePlugin,
-} from "@mdxeditor/editor";
+// import {
+//   MDXEditor,
+//   headingsPlugin,
+//   listsPlugin,
+//   quotePlugin,
+//   thematicBreakPlugin,
+//   markdownShortcutPlugin,
+//   toolbarPlugin,
+//   BoldItalicUnderlineToggles,
+//   BlockTypeSelect,
+//   UndoRedo,
+//   CodeToggle,
+//   InsertTable,
+//   InsertThematicBreak,
+//   InsertAdmonition,
+//   ListsToggle,
+//   directivesPlugin,
+//   AdmonitionDirectiveDescriptor,
+//   tablePlugin,
+// } from "@mdxeditor/editor";
 import axios from "axios";
 
 /* -------------------- Arayüz Tanımları -------------------- */
@@ -95,7 +95,7 @@ const CreateQuiz = () => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   // MDXEditor yeniden mount için
-  const [editorKey, setEditorKey] = useState(0);
+  // const [editorKey, setEditorKey] = useState(0);
 
   /* -------------------- Soru Formu (useForm) -------------------- */
   const {
@@ -123,15 +123,15 @@ const CreateQuiz = () => {
     name: "answers",
   });
 
-  const watchQuestionType = watchQuestion("questionType");
+  // const watchQuestionType = watchQuestion("questionType");
 
   // Debug amaçlı
-  useEffect(() => {
-    const sub = watchQuestion((data) => {
-      console.log("Question Form data:", data);
-    });
-    return () => sub.unsubscribe();
-  }, [watchQuestion]);
+  // useEffect(() => {
+  //   const sub = watchQuestion((data) => {
+  //     console.log("Question Form data:", data);
+  //   });
+  //   return () => sub.unsubscribe();
+  // }, [watchQuestion]);
 
   /* -------------------- Quiz Parametre Formu (useForm) -------------------- */
   const {
@@ -159,7 +159,7 @@ const CreateQuiz = () => {
   /* -------------------- LocalStorage: quizData kaydetme -------------------- */
   useEffect(() => {
     localStorage.setItem("quizData", JSON.stringify(quizData));
-    console.log("Quiz data saved to localStorage:", quizData);
+    // console.log("Quiz data saved to localStorage:", quizData);
   }, [quizData]);
 
   useEffect(() => {
@@ -181,14 +181,14 @@ const CreateQuiz = () => {
       updated[editingIndex] = newQuestion;
       setQuizData({ ...quizData, questions: updated });
       setEditingIndex(null);
-      console.log(`Question ${editingIndex + 1} updated.`);
+      // console.log(`Question ${editingIndex + 1} updated.`);
     } else {
       // Yeni Soru
       setQuizData({
         ...quizData,
         questions: [...quizData.questions, newQuestion],
       });
-      console.log("New question added.");
+      // console.log("New question added.");
     }
 
     // Form sıfırlama
@@ -200,17 +200,17 @@ const CreateQuiz = () => {
         { value: "", isCorrect: false },
       ],
     });
-    setEditorKey((prev) => prev + 1);
+    // setEditorKey((prev) => prev + 1);
   };
 
   /* -------------------- Soru Düzenleme -------------------- */
   const handleEditQuestion = (index: number) => {
     const q = quizData.questions[index];
     resetQuestion(q);
-    setEditorKey((prev) => prev + 1);
+    // setEditorKey((prev) => prev + 1);
     setEditingIndex(index);
     setStep("questions");
-    console.log(`Editing question ${index + 1}`);
+    // console.log(`Editing question ${index + 1}`);
   };
 
   /* -------------------- onSubmitParameters (Parametre Formu Submit) -------------------- */
@@ -262,7 +262,7 @@ const CreateQuiz = () => {
           payload
         );
 
-        console.log("Quiz başarıyla gönderildi:", response.data);
+        // console.log("Quiz başarıyla gönderildi:", response.data);
         if (response.data.status === "success") {
           alert("Quiz created successfully!");
           navigate(`/user/${userId}`);

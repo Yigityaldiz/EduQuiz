@@ -1,22 +1,16 @@
 import { lazy, Suspense } from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import OCConnectWrapper from "./layouts/OCConnectWrapper";
 import { Toaster } from "./components/ui/toaster";
 import { QuizPage } from "./pages/quiz";
-import { WagmiConfig } from 'wagmi'
-import config from './config/wagmiClient'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { WagmiConfig } from "wagmi";
+import config from "./config/wagmiClient";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Lazy-loaded components
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const CreateQuiz = lazy(() => import("./pages/CreateQuiz"));
-const Questions = lazy(() => import("./pages/Questions"));
 const UserPage = lazy(() => import("./pages/UserPage"));
 
 // Lazy loading wrapper
@@ -61,14 +55,6 @@ const router = createBrowserRouter([
             <WagmiConfig config={config}>
               <CreateQuiz />
             </WagmiConfig>
-          </LazyLoad>
-        ),
-      },
-      {
-        path: "questions",
-        element: (
-          <LazyLoad>
-            <Questions />
           </LazyLoad>
         ),
       },

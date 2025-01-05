@@ -1,7 +1,8 @@
 import { CheckCheckIcon } from "lucide-react";
-import { Question } from "../types/question";
 import { cn } from "@/lib/utils";
 import * as React from "react";
+
+import { Answer, Question } from "../api/quizApi";
 
 interface QuestionCardProps {
   question: Question;
@@ -22,8 +23,6 @@ export default function QuestionCard({
   onPrevious,
   onNext,
 }: QuestionCardProps) {
-  console.log(totalQuestions);
-  console.log(selectedAnswer);
 
   return (
     <div className="bg-white rounded-lg border border-[#91E2A8] h-[70dvh] w-full max-w-5xl z-20 relative">
@@ -41,7 +40,7 @@ export default function QuestionCard({
         </div>
 
         <div className="grid grid-cols-2 gap-8">
-          {question.answers.map((option, index) => (
+          {question.answers.map((option: Answer, index: number) => (
             <button
               key={index}
               onClick={() => onAnswer(index)}

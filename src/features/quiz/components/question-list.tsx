@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import QuestionCard from "./question-card";
 import { Question } from "../api/quizApi";
 // import QuizTimer from "./quiz-timer";
@@ -8,7 +8,7 @@ interface QuestionListProps {
   onComplete: (results: {
     score: number;
     correctAnswers: number;
-    timeTaken: number;
+    // timeTaken: number;
   }) => void;
 }
 
@@ -18,14 +18,13 @@ export default function QuestionList({
 }: QuestionListProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
-  const [timeElapsed, setTimeElapsed] = useState(0);
+  // const [timeElapsed, setTimeElapsed] = useState(0);
   const totalQuestions = questions.length;
 
   const handleAnswer = (answerIndex: number) => {
     setAnswers((prev) => {
       const newAnswers = [...prev];
       newAnswers[currentQuestionIndex] = answerIndex;
-      console.log(newAnswers);
       return newAnswers;
     });
   };
@@ -47,7 +46,7 @@ export default function QuestionList({
       onComplete({
         score: Math.ceil((correctCount / totalQuestions) * 100),
         correctAnswers: correctCount,
-        timeTaken: timeElapsed,
+        // timeTaken: timeElapsed,
       });
     }
   };
