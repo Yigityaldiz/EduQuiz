@@ -2,10 +2,20 @@ import { useState, useEffect } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useOCAuth } from "@opencampus/ocid-connect-js";
 import { useNavigate } from "react-router-dom";
-import { injected, useConnect, useAccount, useSwitchChain, useReadContract, useWriteContract } from 'wagmi'
+import {
+  injected,
+  useConnect,
+  useAccount,
+  useSwitchChain,
+  useReadContract,
+  useWriteContract,
+} from "wagmi";
 
-import { wagmiContractConfig } from '../contract/contract'
-import { abi, address } from "@/contract/EduQuiz"
+import { parseEther } from "viem";
+
+
+import { wagmiContractConfig } from "../contract/contract";
+
 import "@mdxeditor/editor/style.css";
 import {
   MDXEditor,
@@ -58,6 +68,8 @@ const CreateQuiz = () => {
 
   /* -------------------- OCAuth (UserId) -------------------- */
   const { OCId, ethAddress } = useOCAuth();
+
+
   useEffect(() => {
     if (!OCId || !ethAddress) {
       const randomUserId = "quest.edu_Ox8e3d";
@@ -205,54 +217,58 @@ const CreateQuiz = () => {
   const onSubmitParameters = async (data: QuizData) => {
     try {
       // Akıllı sözleşme işlemi
-      await writeContract({
-        abi,
-        address: '0x03731969784155A7F5833e89d467104b3a2C1AE1',
-        functionName: 'createQuiz',
-        args: [
-          data.title,
-          BigInt(data.liquidity),
-          BigInt(Date.now()),
-          BigInt(Date.now() + data.duration * 60 * 1000),
-          BigInt(data.liquidity),
 
+      const tx = await writeContractAsync({
+        abi: wagmiContractConfig.abi,
+        address: wagmiContractConfig.address,
+        functionName: "createQuiz",
+        args: [
+          "Test Quiz",
+          BigInt(1000),
+          BigInt(Date.now()),
+          BigInt(Date.now() + 60 * 60 * 1000),
         ],
+        value: parseEther("0.000000001"),
+        chain: chain,
+        account: address,
       });
 
-      // 1) quizData state’ini güncelle
-      setQuizData((prev) => ({
-        ...prev,
-        title: data.title,
-        description: data.description,
-        winnerCount: data.winnerCount,
-        duration: data.duration,
-        liquidity: data.liquidity ?? "",
-      }));
+      if (tx) {
+        // 1) quizData state’ini güncelle
+        setQuizData((prev) => ({
+          ...prev,
+          title: data.title,
+          description: data.description,
+          winnerCount: data.winnerCount,
+          duration: data.duration,
+          liquidity: data.liquidity ?? "",
+        }));
 
-      // 2) userId’yi localStorage’dan al
-      const userId = localStorage.getItem("userId") || "";
-      const payload = {
-        ...quizData,
-        title: data.title,
-        description: data.description,
-        winnerCount: data.winnerCount,
-        duration: data.duration,
-        liquidity: data.liquidity ?? "",
-        userId,
-      };
+        // 2) userId’yi localStorage’dan al
+        const userId = localStorage.getItem("userId") || "";
+        const payload = {
+          ...quizData,
+          title: data.title,
+          description: data.description,
+          winnerCount: data.winnerCount,
+          duration: data.duration,
+          liquidity: data.liquidity ?? "",
+          userId,
+        };
 
-      // 3) axios post isteği
-      const response = await axios.post(
-        "https://api.eduquiz.space/api/quizzes",
-        payload
-      );
+        // 3) axios post isteği
+        const response = await axios.post(
+          "https://api.eduquiz.space/api/quizzes",
+          payload
+        );
 
-      console.log("Quiz başarıyla gönderildi:", response.data);
-      if (response.data.status === "success") {
-        alert("Quiz created successfully!");
-        navigate(`/user/${userId}`);
-      } else {
-        alert("An error occurred, please try again.");
+        console.log("Quiz başarıyla gönderildi:", response.data);
+        if (response.data.status === "success") {
+          alert("Quiz created successfully!");
+          navigate(`/user/${userId}`);
+        } else {
+          alert("An error occurred, please try again.");
+        }
       }
     } catch (error) {
       console.error("Quiz gönderilirken hata oluştu:", error);
@@ -266,7 +282,7 @@ const CreateQuiz = () => {
 
   const { connect } = useConnect();
   const { switchChain } = useSwitchChain();
-  const { address, isConnected } = useAccount();
+  const { address, isConnected, chain } = useAccount();
 
   const handleConnect = async () => {
     try {
@@ -283,31 +299,31 @@ const CreateQuiz = () => {
       console.error("Zincir değiştirme hatası:", error);
     }
   };
-  const { writeContract } = useWriteContract()
 
-  const handleTestWriteContract = async () => {
-    try {
-      await writeContract({
-        abi,
-        address: '0x03731969784155A7F5833e89d467104b3a2C1AE1',
-        functionName: 'createQuiz',
-        args: [
-          "Test Quiz",
-          BigInt(1000),
-          BigInt(Date.now()),
-          BigInt(Date.now() + 60 * 60 * 1000),
-          BigInt(1000),
-        ],
-      });
+  const { writeContractAsync } = useWriteContract();
 
-    } catch (error) {
-      console.error("Transaction gönderilirken hata oluştu:", error);
-    }
-  };
+  // const handleTestWriteContract = async () => {
+  //   try {
+  //     await writeContractAsync({
+  //       abi: wagmiContractConfig.abi,
+  //       address: wagmiContractConfig.address,
+  //       functionName: "createQuiz",
+  //       args: [
+  //         "Test Quiz",
+  //         BigInt(1000),
+  //         BigInt(Date.now()),
+  //         BigInt(Date.now() + 60 * 60 * 1000),
+  //       ],
+  //       value: parseEther("0.000000001"),
+  //     });
+  //   } catch (error) {
+  //     console.error("Transaction gönderilirken hata oluştu:", error);
+  //   }
+  // };
 
   const { data: Course } = useReadContract({
     ...wagmiContractConfig,
-    functionName: 'getCourse',
+    functionName: "getCourse",
     args: [BigInt(1)],
   });
 
@@ -321,7 +337,7 @@ const CreateQuiz = () => {
 
   const displayAddress = address
     ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
-    : '';
+    : "";
 
   /* -------------------- Render -------------------- */
   return (
@@ -338,10 +354,11 @@ const CreateQuiz = () => {
           {step === "questions" && (
             <button
               type="button"
-              className={`bg-blue-500 text-white px-4 py-2 rounded-md ${quizData.questions.length === 0
-                ? "opacity-50 cursor-not-allowed"
-                : ""
-                }`}
+              className={`bg-blue-500 text-white px-4 py-2 rounded-md ${
+                quizData.questions.length === 0
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
               onClick={() => {
                 if (quizData.questions.length > 0) {
                   setStep("parameters");
@@ -361,8 +378,9 @@ const CreateQuiz = () => {
           {/* Adım Göstergeleri */}
           <div className="flex justify-center mb-6">
             <div
-              className={`flex items-center ${step === "questions" ? "text-blue-500" : "text-gray-500"
-                }`}
+              className={`flex items-center ${
+                step === "questions" ? "text-blue-500" : "text-gray-500"
+              }`}
             >
               <div className="w-8 h-8 rounded-full border-2 border-blue-500 flex items-center justify-center">
                 1
@@ -371,8 +389,9 @@ const CreateQuiz = () => {
             </div>
             <div className="mx-4">→</div>
             <div
-              className={`flex items-center ${step === "parameters" ? "text-blue-500" : "text-gray-500"
-                }`}
+              className={`flex items-center ${
+                step === "parameters" ? "text-blue-500" : "text-gray-500"
+              }`}
             >
               <div className="w-8 h-8 rounded-full border-2 border-blue-500 flex items-center justify-center">
                 2
@@ -400,7 +419,9 @@ const CreateQuiz = () => {
                           {...field}
                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                         >
-                          <option value="multiple-choice">Multiple Choice</option>
+                          <option value="multiple-choice">
+                            Multiple Choice
+                          </option>
                           <option value="true-false">True/False</option>
                         </select>
                       )}
@@ -433,7 +454,10 @@ const CreateQuiz = () => {
                     </label>
                     <div className="space-y-2">
                       {fieldsAnswer.map((item, index) => (
-                        <div key={item.id} className="flex items-center space-x-2">
+                        <div
+                          key={item.id}
+                          className="flex items-center space-x-2"
+                        >
                           <input
                             type="checkbox"
                             checked={item.isCorrect}
@@ -483,7 +507,9 @@ const CreateQuiz = () => {
                       className="bg-blue-500 text-white px-6 py-3 rounded-md w-full"
                       onClick={handleSaveOrUpdateQuestion}
                     >
-                      {editingIndex !== null ? "Update Question" : "Add Question"}
+                      {editingIndex !== null
+                        ? "Update Question"
+                        : "Add Question"}
                     </button>
                   </div>
                 </form>
@@ -624,8 +650,19 @@ const CreateQuiz = () => {
                       className="bg-indigo-500 text-white px-4 py-2 rounded-md"
                       onClick={handleConnect}
                     >
-                      {isConnected ? `Connected: ${displayAddress}` : 'Connect Wallet'}
+                      {isConnected
+                        ? `Connected: ${displayAddress}`
+                        : "Connect Wallet"}
                     </button>
+
+                    <button
+                      type="button"
+                      className="bg-green-500 ml-2 text-white px-4 py-2 rounded-md"
+                      onClick={handleSwitchChain}
+                    >
+                      Switch Chain
+                    </button>
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700">
                         Liquidity
@@ -670,13 +707,13 @@ const CreateQuiz = () => {
                   >
                     Read Contract
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     className="bg-yellow-500 text-white px-6 py-3 rounded-md"
                     onClick={handleTestWriteContract}
                   >
                     Test Write Contract
-                  </button>
+                  </button> */}
                 </div>
               </form>
             </div>

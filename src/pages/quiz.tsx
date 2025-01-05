@@ -97,11 +97,11 @@ export function QuizPage() {
             onComplete={handleQuizComplete}
           />
         )}
-        <img
+        {/* <img
           src="/assets/images/backgrounds/quiz-bg.png"
           alt="quiz background"
           className="absolute top-0 left-0 h-full w-full object-cover z-10 pointer-events-none"
-        />
+        /> */}
       </div>
     </div>
   );

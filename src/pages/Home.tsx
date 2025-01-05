@@ -70,7 +70,7 @@ function Home() {
           duration={0.75}
         >
           <img
-            src="https://framerusercontent.com/images/JSakO3iDpBY0uvb9cOV7x278fQM.png?scale-down-to=1024"
+            src="/assets/images/eduquiz-hero.png"
             alt="hero"
             className="rounded-2xl object-contain w-full"
           />

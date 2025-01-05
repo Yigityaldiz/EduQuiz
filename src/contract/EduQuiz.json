@@ -1,25 +1,7 @@
 {
   "name": "EduQuiz",
-  "address": "0x03731969784155A7F5833e89d467104b3a2C1AE1",
+  "address": "0x05e9153Ea64ADE518b5b02c2Fe70402400B3eB5F",
   "abi": [
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_quizId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_winner",
-          "type": "address"
-        }
-      ],
-      "name": "endQuiz",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
     {
       "inputs": [
         {
@@ -148,22 +130,27 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "EnforcedPause",
-      "type": "error"
-    },
-    {
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_courseId",
+          "name": "_quizId",
           "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_winner",
+          "type": "address"
         }
       ],
-      "name": "enrollCourse",
+      "name": "endQuiz",
       "outputs": [],
-      "stateMutability": "payable",
+      "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "EnforcedPause",
+      "type": "error"
     },
     {
       "inputs": [],
@@ -1283,5 +1270,5 @@
     }
   ],
   "filePath": "default_workspace/contracts/EduQuiz.sol",
-  "pinnedAt": 1736014430987
+  "pinnedAt": 1736102185308
 }
