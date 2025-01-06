@@ -14,6 +14,7 @@ module.exports = {
       },
       boxShadow: {
         "inner-shadow": "inset 0 -10px 40px #101636",
+        "header-shadow": "0px 7px 29px 0px #5964f6;"
       },
       colors: {},
       animation: {

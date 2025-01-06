@@ -17,17 +17,15 @@ import ConnectWalletButton from "../connect-wallet";
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-between px-4 md:px-8 py-4 md:py-6 bg-transparent w-full">
-      {/* Logo */}
+    <header className="flex items-center border border-[#9ea3bf40] z-20 w-[95%] fixed backdrop-blur-xl bg-[#060a1e]/50 left-1/2 top-2 rounded-full -translate-x-1/2 container-fluid justify-between px-4 md:px-8 py-2 md:py-3">
       <div className="flex items-center">
         <img
           src="/assets/images/logos/eduquiz-white.png"
           alt="Eduquiz"
-          className="h-12 w-auto"
+          className="h-10 md:h-12 w-auto pointer-events-none"
         />
       </div>
 
-      {/* Masaüstü Menü */}
       <nav className="hidden md:block">
         <ul className="flex space-x-6 text-white/50">
           <li>

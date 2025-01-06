@@ -8,7 +8,7 @@ import config from "./config/wagmiClient";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Lazy-loaded components
-const Home = lazy(() => import("./pages/Home"));
+const HomePage = lazy(() => import("./pages/home/index"));
 const About = lazy(() => import("./pages/About"));
 const CreateQuiz = lazy(() => import("./pages/CreateQuiz"));
 const UserPage = lazy(() => import("./pages/UserPage"));
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         index: true,
         element: (
           <LazyLoad>
-            <Home />
+            <HomePage />
           </LazyLoad>
         ),
       },
