@@ -29,12 +29,15 @@ export default function Header() {
       <nav className="hidden md:block">
         <ul className="flex space-x-6 text-white/50">
           <li>
-            <a href="/" className="hover:text-white transition-colors">
+            <a
+              href="#how-it-works"
+              className="hover:text-white transition-colors"
+            >
               How It Works?
             </a>
           </li>
           <li>
-            <a href="/" className="hover:text-white transition-colors">
+            <a href="#features" className="hover:text-white transition-colors">
               Features
             </a>
           </li>
@@ -50,17 +53,11 @@ export default function Header() {
             <div className="h-[2px] w-6 bg-white"></div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-[#060a1e] w-48 z-50 p-3 text-white border border-gray-600 rounded-md mt-2">
-            <DropdownMenuLabel className="text-white">Menü</DropdownMenuLabel>
-            <DropdownMenuSeparator className="my-1 border-b border-white/10" />
             <DropdownMenuItem className="cursor-pointer hover:bg-white/10 rounded px-2 py-1">
-              How It Works?
+              <a href="#how-it-works">How It Works?</a>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer hover:bg-white/10 rounded px-2 py-1">
-              Features
-            </DropdownMenuItem>
-            <DropdownMenuSeparator className="my-1 border-b border-white/10" />
-            <DropdownMenuItem className="cursor-pointer hover:bg-white/10 rounded px-2 py-1">
-              Profile
+              <a href="#features">Features</a>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -2,7 +2,7 @@ import { Rocket, Gift, Shield } from "lucide-react";
 
 export default function Features() {
   return (
-    <section id="features" className="container-fluid py-8 my-8">
+    <section id="features" className="container-fluid py-8 my-8 scroll-mt-20">
       <div className="space-y-6 text-center">
         <h2 className="text-white text-4xl md:text-6xl font-medium">
           Next-Level Learning with EduQuid Cutting-Edge Features

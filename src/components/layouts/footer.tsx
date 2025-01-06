@@ -23,12 +23,12 @@ export default function Footer() {
           <nav>
             <ul className="flex flex-col md:flex-row py-4 md:justify-center items-center text-lg md:text-md text-center md:text-left md:space-x-8 md:py-8 text-white/30">
               <li>
-                <a href="/" className="hover:text-white">
+                <a href="#how-it-works" className="hover:text-white">
                   How It Works?
                 </a>
               </li>
               <li>
-                <a href="/" className="hover:text-white">
+                <a href="#features" className="hover:text-white">
                   Features
                 </a>
               </li>

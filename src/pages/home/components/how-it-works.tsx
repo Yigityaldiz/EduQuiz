@@ -10,7 +10,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="container-fluid py-8 text-center grid md:grid-cols-2 gap-8"
+      className="container-fluid py-8 text-center grid md:grid-cols-2 gap-8 scroll-mt-20"
     >
       <div className="relative h-full">
         <div className="sticky top-1/3 left-0">
