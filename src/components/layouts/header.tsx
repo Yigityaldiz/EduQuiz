@@ -10,8 +10,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
 } from "@radix-ui/react-dropdown-menu";
 import ConnectWalletButton from "../connect-wallet";
 
