@@ -6,11 +6,11 @@ import { QuizPage } from "./pages/quiz";
 import { WagmiConfig } from "wagmi";
 import config from "./config/wagmiClient";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Profile from "./pages/app/profile";
 
 // Lazy-loaded components
 const HomePage = lazy(() => import("./pages/home/index"));
 const CreateQuiz = lazy(() => import("./pages/CreateQuiz"));
-const UserPage = lazy(() => import("./pages/UserPage"));
 
 // Lazy loading wrapper
 const LazyLoad = ({ children }: { children: React.ReactNode }) => (
@@ -70,7 +70,7 @@ const router = createBrowserRouter([
                 path: ":id",
                 element: (
                   <LazyLoad>
-                    <UserPage />
+                    <Profile />
                   </LazyLoad>
                 ),
               },
