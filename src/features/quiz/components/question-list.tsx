@@ -1,6 +1,6 @@
 import { useState } from "react";
 import QuestionCard from "./question-card";
-import { Question } from "../api/quizApi";
+import { Question } from "../services/quizApi";
 // import QuizTimer from "./quiz-timer";
 
 interface QuestionListProps {

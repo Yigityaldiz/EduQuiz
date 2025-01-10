@@ -2,7 +2,7 @@ import { CheckCheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import * as React from "react";
 
-import { Answer, Question } from "../api/quizApi";
+import { Answer, Question } from "../services/quizApi";
 
 interface QuestionCardProps {
   question: Question;

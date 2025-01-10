@@ -1,8 +1,8 @@
 import { StartQuiz } from "@/features/quiz/components/start-quiz";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { quizApi } from "@/features/quiz/api/quizApi";
-import type { Quiz as QuizType } from "@/features/quiz/api/quizApi";
+import { quizApi } from "@/features/quiz/services/quizApi";
+import type { Quiz as QuizType } from "@/features/quiz/services/quizApi";
 import QuestionList from "@/features/quiz/components/question-list";
 import { QuizFinish } from "@/features/quiz/components/quiz-finish";
 

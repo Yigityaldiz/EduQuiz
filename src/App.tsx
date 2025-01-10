@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Lazy-loaded components
 const HomePage = lazy(() => import("./pages/home/index"));
-const About = lazy(() => import("./pages/About"));
 const CreateQuiz = lazy(() => import("./pages/CreateQuiz"));
 const UserPage = lazy(() => import("./pages/UserPage"));
 
@@ -41,43 +40,41 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "about",
-        element: (
-          <LazyLoad>
-            <About />
-          </LazyLoad>
-        ),
-      },
-      {
-        path: "create-quiz",
-        element: (
-          <LazyLoad>
-            <WagmiConfig config={config}>
-              <CreateQuiz />
-            </WagmiConfig>
-          </LazyLoad>
-        ),
-      },
-      {
-        path: "user",
+        path: "app",
         children: [
           {
-            path: ":id",
-            element: (
-              <LazyLoad>
-                <UserPage />
-              </LazyLoad>
-            ),
-          },
-        ],
-      },
+            path: "quiz",
+            children: [
+              {
+                path: "create",
+                element: (
+                  <LazyLoad>
+                    <WagmiConfig config={config}>
+                      <CreateQuiz />
+                    </WagmiConfig>
+                  </LazyLoad>
+                ),
+              },
 
-      {
-        path: "quiz",
-        children: [
+              {
+                path: ":id",
+                element: <QuizPage />,
+              },
+            ],
+          },
+
           {
-            path: ":id",
-            element: <QuizPage />,
+            path: "profile",
+            children: [
+              {
+                path: ":id",
+                element: (
+                  <LazyLoad>
+                    <UserPage />
+                  </LazyLoad>
+                ),
+              },
+            ],
           },
         ],
       },
