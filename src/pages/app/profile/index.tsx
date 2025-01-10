@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { LogOut } from "lucide-react";
 
-// import { CrosswordIcon } from "@/components/icons/crossword";
 import { Button } from "@/components/ui/button";
 import ProfileBar from "@/features/profile/components/profile-bar";
 import ProfileTabs from "@/features/profile/components/tabs";

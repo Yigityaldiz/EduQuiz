@@ -1,11 +1,12 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Hourglass, Settings2, User2 } from "lucide-react";
 import ProfileQuizzesTab from "./quizzes";
+import ProfileSettingsTab from "./settings";
+import ProfileAccountTab from "./account";
 
 export default function ProfileTabs() {
   return (
-    <Tabs className="absolute right-[1px] top-[149px]">
-      {/* <ProfileTabs /> */}
+    <Tabs className="absolute right-[1px] top-[149px]" defaultValue="quizzes">
       <TabsList className="bg-transparent absolute right-0 p-0 border-r border-l border-b rounded-none rounded-b-lg border-gray-200">
         <TabsTrigger
           value="account"
@@ -14,7 +15,7 @@ export default function ProfileTabs() {
           <span>
             <User2 size={16} className="mr-1" />
           </span>
-          Profile
+          Account
         </TabsTrigger>
         <TabsTrigger
           value="quizzes"
@@ -34,6 +35,14 @@ export default function ProfileTabs() {
 
       <TabsContent value="quizzes" className="mt-20">
         <ProfileQuizzesTab />
+      </TabsContent>
+
+      <TabsContent value="settings" className="mt-20">
+        <ProfileSettingsTab />
+      </TabsContent>
+
+      <TabsContent value="account" className="mt-20">
+        <ProfileAccountTab />
       </TabsContent>
     </Tabs>
   );

@@ -1,5 +1,3 @@
-import ProfileTabs from "./tabs";
-
 export default function ProfileBar() {
   return (
     <div className="border border-gray-200 relative rounded-xl h-[150px] mb-20">
@@ -26,10 +24,6 @@ export default function ProfileBar() {
             <p className="text-white text-xs">john.doe@icloud.com</p>
           </div>
         </div>
-      </div>
-
-      <div className="absolute -bottom-[36px] flex right-0">
-        {/* <ProfileTabs /> */}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import ProfileQuizCard from "../profile-quiz-card";
-import ProfileQuizSearch from "../profile-quiz-search";
+import ProfileQuizCard from "./quiz-card";
+import ProfileQuizSearch from "./quiz-search";
 import axios from "axios";
 import { Quiz } from "@/features/quiz/services/quizApi";
 import PencilSpinner from "@/components/pencil-spinner";
