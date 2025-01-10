@@ -1,3 +1,4 @@
+
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   width?: number | string;
   height?: number | string;
@@ -61,3 +62,6 @@ export const OpenCampusIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+
+

@@ -1,0 +1,146 @@
+import { forwardRef } from "react";
+
+export const CrosswordIcon = forwardRef<
+  SVGSVGElement,
+  React.SVGProps<SVGSVGElement>
+>((props, ref) => {
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 30 30"
+      {...props}
+    >
+      <defs>
+        <style>
+          {
+            ".cls-1{fill:#5cc696;}.cls-2{fill:#7ae3aa;}.cls-3{fill:#e7eaf1;}.cls-4{fill:#fff;"
+          }
+        </style>
+      </defs>
+      <g id="Layer_2" data-name="Layer 2">
+        <path
+          className="cls-1"
+          d="M23.00233,7.18282v15.39a1.31873,1.31873,0,0,1-1.32,1.32h-15.39a1.30781,1.30781,0,0,1-1.31-1.19.56986.56986,0,0,1-.01-.13v-15.39a1.31873,1.31873,0,0,1,1.32-1.32h15.39a1.19346,1.19346,0,0,1,.47.09A1.315,1.315,0,0,1,23.00233,7.18282Z"
+        />
+        <path
+          className="cls-2"
+          d="M22.17237,6.08284v15.4a1.3145,1.3145,0,0,1-1.31,1.31h-15.39a1.33244,1.33244,0,0,1-.49-.09.56986.56986,0,0,1-.01-.13v-15.39a1.31873,1.31873,0,0,1,1.32-1.32h15.39a1.19346,1.19346,0,0,1,.47.09A.295.295,0,0,1,22.17237,6.08284Z"
+        />
+        <rect
+          className="cls-3"
+          x="7.94297"
+          y="10.35357"
+          width="2.2983"
+          height="2.2983"
+        />
+        <rect
+          className="cls-4"
+          x="10.20567"
+          y="10.35357"
+          width="2.2983"
+          height="2.2983"
+        />
+        <rect
+          className="cls-3"
+          x="12.45057"
+          y="10.35357"
+          width="2.2983"
+          height="2.2983"
+        />
+        <rect
+          className="cls-4"
+          x="14.71327"
+          y="10.35357"
+          width="2.2983"
+          height="2.2983"
+        />
+        <rect
+          className="cls-3"
+          x="16.95817"
+          y="10.35357"
+          width="2.2983"
+          height="2.2983"
+        />
+        <rect
+          className="cls-3"
+          x="16.95817"
+          y="14.95018"
+          width="2.2983"
+          height="2.2983"
+        />
+        <rect
+          className="cls-4"
+          x="19.22088"
+          y="10.35357"
+          width="2.2983"
+          height="2.2983"
+        />
+        <rect
+          className="cls-3"
+          x="14.71327"
+          y="17.14168"
+          width="2.2983"
+          height="2.2983"
+          transform="translate(-2.4284 34.15325) rotate(-90)"
+        />
+        <rect
+          className="cls-4"
+          x="14.71327"
+          y="14.87897"
+          width="2.2983"
+          height="2.2983"
+          transform="translate(-0.1657 31.89055) rotate(-90)"
+        />
+        <rect
+          className="cls-3"
+          x="14.71327"
+          y="12.63407"
+          width="2.2983"
+          height="2.2983"
+          transform="translate(2.0792 29.64565) rotate(-90)"
+        />
+        <rect
+          className="cls-4"
+          x="10.19677"
+          y="14.93237"
+          width="2.2983"
+          height="2.2983"
+        />
+        <rect
+          className="cls-3"
+          x="12.44167"
+          y="14.93237"
+          width="2.2983"
+          height="2.2983"
+        />
+        <rect
+          className="cls-3"
+          x="14.71327"
+          y="8.12647"
+          width="2.2983"
+          height="2.2983"
+          transform="translate(6.5868 25.13804) rotate(-90)"
+        />
+        <rect
+          className="cls-1"
+          x="6.67613"
+          y="18.12577"
+          width="6.69576"
+          height="1.0858"
+          rx="0.5429"
+        />
+        <rect
+          className="cls-1"
+          x="6.67613"
+          y="19.78032"
+          width="6.69576"
+          height="1.0858"
+          rx="0.5429"
+        />
+      </g>
+    </svg>
+  );
+});
+
+
