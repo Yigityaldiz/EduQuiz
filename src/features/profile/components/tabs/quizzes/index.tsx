@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import ProfileQuizCard from "./quiz-card";
 import ProfileQuizSearch from "./quiz-search";
 import axios from "axios";
-import { Quiz } from "@/features/quiz/services/quizApi";
 import PencilSpinner from "@/components/pencil-spinner";
+import { IQuiz } from "@/features/quiz/types";
 
 export default function ProfileQuizzesTab() {
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [quizzes, setQuizzes] = useState<IQuiz[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
