@@ -1,24 +1,21 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
-import { FacebookIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
 
 interface QuizFinishProps {
-  score: number;
   totalQuestions: number;
-  correctAnswers: number;
-  timeTaken: number;
-  earnedTokens?: number;
+  results: {
+    score: number;
+    correctAnswers: number;
+    timeTaken: number;
+    earnedTokens: number;
+  };
 }
 
-export function QuizFinish({
-  score,
-  totalQuestions,
-  correctAnswers,
-  timeTaken,
-  earnedTokens,
-}: QuizFinishProps) {
+export function QuizFinish({ totalQuestions, results }: QuizFinishProps) {
   const navigate = useNavigate();
+
+  const { score, correctAnswers, timeTaken, earnedTokens } = results;
 
   React.useEffect(() => {
     confetti({
@@ -30,8 +27,6 @@ export function QuizFinish({
 
   return (
     <div className="bg-white rounded-lg border border-[#91E2A8] min-h-[70dvh] w-full max-w-5xl z-20 relative">
-  
-
       <div className="relative space-y-8 p-8">
         <div className="bg-white p-12 border border-[#91E2A8] rounded-md text-center">
           <h2 className="text-4xl text-[#22A247] font-bold mb-8">
@@ -61,25 +56,10 @@ export function QuizFinish({
 
           <div className="flex flex-col gap-4">
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/app/profile")}
               className="w-full bg-white hover:bg-option hover:text-white text-option border-2 border-option font-bold py-4 px-8 rounded-lg uppercase hover:bg-[#DEF7E5] transition-colors"
             >
               Back to Dashboard
-            </button>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 border border-[#91E2A8] rounded-md">
-          <h3 className="text-xl text-center font-semibold mb-4">Share Your Achievement</h3>
-          <div className="flex gap-4 justify-center">
-            <button className="p-3 rounded-full bg-[#DEF7E5] hover:bg-[#91E2A8] transition-colors">
-              <TwitterIcon />
-            </button>
-            <button className="p-3 rounded-full bg-[#DEF7E5] hover:bg-[#91E2A8] transition-colors">
-              <FacebookIcon />
-            </button>
-            <button className="p-3 rounded-full bg-[#DEF7E5] hover:bg-[#91E2A8] transition-colors">
-              <LinkedinIcon />
             </button>
           </div>
         </div>

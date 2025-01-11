@@ -3,28 +3,25 @@ import { quizService } from "../services/quizApi";
 import { IQuiz } from "../types";
 import { useToast } from "@/hooks/use-toast";
 
-export const useQuiz = () => {
+export const useQuiz = (id: string, userId: string) => {
   const { toast } = useToast();
 
-  const quiz = (id: string) =>
-    useQuery({
-      queryKey: ["quiz", id],
-      queryFn: async () => {
-        const { data } = await quizService.getById(id);
-        return data;
-      },
-    });
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["quiz", id],
+    queryFn: async () => {
+      const { data } = await quizService.getById(id, userId);
+      return data as IQuiz;
+    },
+  });
 
   const createQuiz = useMutation({
     mutationFn: (newQuiz: Omit<IQuiz, "id">) => quizService.create(newQuiz),
     onSuccess: () => {
-      // queryClient.invalidateQueries({queryKey: ["quizzes"]});
       toast({
-        title: "SUCCESSFULL!",
+        title: "SUCCESSFUL!",
         description: "Quiz created successfully",
       });
     },
-
     onError: (error) => {
       toast({
         title: "ERROR!",
@@ -34,5 +31,5 @@ export const useQuiz = () => {
     },
   });
 
-  return { quiz, createQuiz };
+  return { quiz: data, error, isLoading, createQuiz };
 };
