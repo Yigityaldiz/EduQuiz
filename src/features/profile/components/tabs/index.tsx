@@ -6,8 +6,8 @@ import ProfileAccountTab from "./account";
 
 export default function ProfileTabs() {
   return (
-    <Tabs className="absolute right-[1px] top-[149px]" defaultValue="quizzes">
-      <TabsList className="bg-transparent absolute right-0 p-0 border-r border-l border-b rounded-none rounded-b-lg border-gray-200">
+    <Tabs className="relative right-[1px]" defaultValue="quizzes">
+      <TabsList className="bg-transparent absolute -top-[81px] right-0 p-0 border-r border-l border-b rounded-none rounded-b-lg border-gray-200">
         <TabsTrigger
           value="account"
           className="data-[state=active]:bg-blue-400 data-[state=active]:text-white h-full rounded-none rounded-bl-lg flex items-center px-4 border-r border-gray-200"
