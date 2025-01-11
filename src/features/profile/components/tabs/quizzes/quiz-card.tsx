@@ -2,11 +2,12 @@ import { Hourglass } from "@/components/icons/hourglass";
 import { QuestionMark } from "@/components/icons/question-mark";
 import { Trophy } from "@/components/icons/trophy";
 import { Button } from "@/components/ui/button";
-import { Quiz } from "@/features/quiz/services/quizApi";
 import { toast } from "@/hooks/use-toast";
 import { Copy, Play, Settings } from "lucide-react";
 
-export default function ProfileQuizCard({ quiz }: { quiz: Quiz }) {
+import { IQuiz } from "@/features/quiz/types";
+
+export default function ProfileQuizCard({ quiz }: { quiz: IQuiz }) {
   const handleCopyQuizLink = async (quizId: string) => {
     await navigator.clipboard.writeText("eduquiz.space/quiz/" + quizId);
     toast({
@@ -16,7 +17,7 @@ export default function ProfileQuizCard({ quiz }: { quiz: Quiz }) {
   };
 
   return (
-    <div className="flex flex-col justify-between rounded-2xl transition-all min-h-[250px] h-full w-full duration-500 hover:scale-[1.025] hover:transition-all hover:duration-500 border border-gray-200">
+    <div className="flex flex-col bg-white justify-between rounded-2xl transition-all min-h-[250px] h-full w-full duration-500 hover:scale-[1.025] hover:transition-all hover:duration-500 border border-gray-200">
       <div>
         <div className="flex justify-between pr-4 items-center">
           <QuestionMark width={64} height={64} />

@@ -1,33 +1,17 @@
 import { useEffect, useState } from "react";
 import ProfileQuizCard from "./quiz-card";
 import ProfileQuizSearch from "./quiz-search";
-import axios from "axios";
 import PencilSpinner from "@/components/pencil-spinner";
 import { IQuiz } from "@/features/quiz/types";
+import { useProfile } from "@/features/profile/hooks/use-profile";
 
 export default function ProfileQuizzesTab() {
-  const [quizzes, setQuizzes] = useState<IQuiz[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [filteredQuizzes, setFilteredQuizzes] = useState<IQuiz[]>([]);
+  const { quizzes, error, isLoading } = useProfile();
 
   useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(`https://api.eduquiz.space/api/quizzes?userId=quest.edu_Ox8e3d`)
-      .then((response) => {
-        // Ensure response.data is an array
-        const quizData = Array.isArray(response.data) ? response.data : [];
-        setQuizzes(quizData);
-        setError(null);
-      })
-      .catch((error) => {
-        console.error("Error fetching quizzes:", error);
-        setError("Failed to load quizzes");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+    setFilteredQuizzes(quizzes);
+  }, [quizzes]);
 
   if (isLoading) {
     return (
@@ -37,15 +21,26 @@ export default function ProfileQuizzesTab() {
     );
   }
 
+  const handleSearch = (search: string) => {
+    if (search === "") {
+      setFilteredQuizzes(quizzes);
+    } else {
+      const filtered = quizzes.filter((quiz: IQuiz) =>
+        quiz.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setFilteredQuizzes(filtered);
+    }
+  };
+
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Error: Failed to fetch your quizzes.</div>;
   }
 
   return (
     <div className="flex flex-col space-y-4">
-      <ProfileQuizSearch />
+      <ProfileQuizSearch onSearch={handleSearch} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {quizzes.map((quiz) => (
+        {filteredQuizzes.map((quiz: IQuiz) => (
           <ProfileQuizCard key={quiz.id} quiz={quiz} />
         ))}
       </div>

@@ -2,10 +2,20 @@ import { Input } from "@/components/ui/input";
 import { BadgePlus } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function ProfileQuizSearch() {
+interface ProfileQuizSearchProps {
+  onSearch: (value: string) => void;
+}
+
+export default function ProfileQuizSearch({
+  onSearch,
+}: ProfileQuizSearchProps) {
   return (
-    <div className="mb-4 flex items-center space-x-4 h-12">
-      <Input placeholder="Search quizzes" className="rounded-full p-6 h-full" />
+    <div className="flex items-center space-x-4 h-12">
+      <Input
+        placeholder="Search quizzes"
+        className="bg-white rounded-full p-6 h-full"
+        onChange={(e) => onSearch(e.target.value)}
+      />
 
       <Link
         to="/app/quiz/create"
